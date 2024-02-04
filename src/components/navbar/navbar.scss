@@ -22,7 +22,7 @@ body {
 .navbar-logo {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: blue;
 }
 
 .nav-menu {
@@ -33,11 +33,11 @@ body {
 .nav-item {
   margin: 0 15px;
   font-size: 18px;
-  color: red;
+  color: blue;
 }
 
 .nav-item:hover {
-  color: green;
+  color: blue;
 }
 
 .search-bar {
@@ -47,8 +47,9 @@ body {
 input {
   padding: 8px;
   margin-right: 10px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   outline: none;
+  
 }
 
 button {
