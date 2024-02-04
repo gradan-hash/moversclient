@@ -1,28 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Children, useState } from "react";
+
+import "./App.css";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Navbar from "./components/navbar/Navbar";
+import Homepage from "./components/homepage/Homepage";
+import Footer from "./components/footer/Footer";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const queryClient = new QueryClient();
 
-  return (
-    <>
-      <div>
-       
-        
+  const Layout = () => {
+    return (
+      <div className="app">
+        <QueryClientProvider client={queryClient}>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </QueryClientProvider>
       </div>
-      <h1>Movers</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    );
+  };
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+
+      children: [
+        {
+          path: "/",
+          element: <Homepage />,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
