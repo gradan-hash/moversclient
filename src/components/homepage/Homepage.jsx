@@ -34,7 +34,7 @@ const Homepage = () => {
           to ensure a smooth, efficient, and secure moving experience.
         </p>
       </div>
-      <Footer />;
+      {/* <Footer />; */}
     </div>
   );
 };
