@@ -8,6 +8,7 @@ import Homepage from "./components/homepage/Homepage";
 import Footer from "./components/footer/Footer";
 import Register from "./components/register/Register";
 import Login from "./components/login/Login";
+import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
   const queryClient = new QueryClient();
@@ -40,6 +41,10 @@ function App() {
         {
           path: "/login",
           element: <Login />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
         },
       ],
     },

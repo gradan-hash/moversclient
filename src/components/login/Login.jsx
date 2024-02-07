@@ -43,7 +43,9 @@ function Login() {
           required
         />
 
-        <button type="submit">Login</button>
+        <button type="submit">
+          <Link to="/dashboard">Login</Link>
+        </button>
         <div className="loggedin">
           <strong>
             <Link to="/register">register</Link>
