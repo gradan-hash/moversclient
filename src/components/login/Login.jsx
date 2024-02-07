@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./login.scss";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [loginData, setLoginData] = useState({
@@ -43,6 +44,11 @@ function Login() {
         />
 
         <button type="submit">Login</button>
+        <div className="loggedin">
+          <strong>
+            <Link to="/register">register</Link>
+          </strong>
+        </div>
       </form>
     </div>
   );

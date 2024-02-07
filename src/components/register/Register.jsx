@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./register.scss";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -64,6 +65,11 @@ function Register() {
         />
 
         <button type="submit">Register</button>
+        <div className="loggedin">
+          <strong>
+            <Link to="/login">login</Link>
+          </strong>
+        </div>
       </form>
     </div>
   );
