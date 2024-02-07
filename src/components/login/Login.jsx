@@ -48,7 +48,9 @@ function Login() {
         </button>
         <div className="loggedin">
           <strong>
-            <Link to="/register">register</Link>
+            <Link to="/register" style={{ textDecoration: "none" }}>
+              register
+            </Link>
           </strong>
         </div>
       </form>

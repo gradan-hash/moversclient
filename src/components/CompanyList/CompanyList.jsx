@@ -1,5 +1,6 @@
 import React from "react";
 import "./companyList.scss";
+import SearchBar from "../searchbar/SearchBar";
 
 const CompanyList = ({ filter }) => {
   // Dummy data for example purposes
@@ -25,12 +26,25 @@ const CompanyList = ({ filter }) => {
   ];
 
   const filteredCompanies = companies.filter((company) => {
-    return company.name.toLowerCase().includes(filter.toLowerCase());
-    // Extend this logic to filter by other criteria like quote and location
+    // Assuming filter has properties like company, quote, and location
+    const matchesCompany = company.name
+      .toLowerCase()
+      .includes(filter.company.toLowerCase());
+    const matchesQuote = company.quote
+      .toLowerCase()
+      .includes(filter.quote.toLowerCase());
+    const matchesLocation = company.location
+      .toLowerCase()
+      .includes(filter.location.toLowerCase());
+
+    // Adjust the logic based on how you want to combine these filters
+    return matchesCompany && matchesQuote && matchesLocation;
   });
 
   return (
     <div className="company-list">
+      <SearchBar onSearch={handleSearch} />
+
       {filteredCompanies.map((company, index) => (
         <div key={index} className="company-card">
           <h3>{company.name}</h3>
