@@ -20,6 +20,7 @@ const SinglePage = () => {
     description: "Description about the company...",
   };
 
+  const destination = { lat: -1.286389, lng: 36.817223 }; // Example destination
   const watchIdRef = useRef(null);
 
   const fetchLocationAndUpdateMap = () => {
@@ -34,6 +35,7 @@ const SinglePage = () => {
               essential: true,
               zoom: 14,
             });
+            drawLineAndDestination(latitude, longitude);
           }
         },
         (error) => {
@@ -41,6 +43,60 @@ const SinglePage = () => {
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
+    }
+  };
+
+  const drawLineAndDestination = (latitude, longitude) => {
+    if (!map.current) return;
+
+    // Destination Marker
+    new mapboxgl.Marker({ color: "red" })
+      .setLngLat([destination.lng, destination.lat])
+      .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("Destination"))
+      .addTo(map.current);
+
+    const coordinates = [
+      [longitude, latitude],
+      [destination.lng, destination.lat],
+    ];
+
+    if (map.current.getSource("route")) {
+      // If the source exists, update its data
+      map.current.getSource("route").setData({
+        type: "Feature",
+        properties: {},
+        geometry: {
+          type: "LineString",
+          coordinates: coordinates,
+        },
+      });
+    } else {
+      // Only add the source and layer if they don't exist
+      map.current.addSource("route", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: {
+            type: "LineString",
+            coordinates: coordinates,
+          },
+        },
+      });
+
+      map.current.addLayer({
+        id: "route",
+        type: "line",
+        source: "route",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#888",
+          "line-width": 8,
+        },
+      });
     }
   };
 
@@ -52,23 +108,34 @@ const SinglePage = () => {
     };
   }, []);
 
-  console.log(userLocation);
   // Initialize map with user's location
   useEffect(() => {
-    if (userLocation && !map.current) {
+    if (userLocation && !map.current && mapContainer.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [userLocation.lng, userLocation.lat],
+        center: [userLocation.lng, userLocation.lat], // Ensure these are valid numbers
         zoom: 14,
       });
 
-      new mapboxgl.Marker()
-        .setLngLat([userLocation.lng, userLocation.lat])
-        .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("You are here"))
-        .addTo(map.current);
+      // Wait for the map to load before adding the marker
+      map.current.on("load", () => {
+        // Adding the user location marker
+        new mapboxgl.Marker()
+          .setLngLat([userLocation.lng, userLocation.lat])
+          .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("You are here"))
+          .addTo(map.current);
+
+        // Ensure the destination marker is added here as well
+        new mapboxgl.Marker({ color: "red" })
+          .setLngLat([destination.lng, destination.lat])
+          .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("Destination"))
+          .addTo(map.current);
+
+        // If there's a need to draw a line between markers, ensure that happens here as well
+      });
     }
-  }, [userLocation]);
+  }, [userLocation]); // Dependency array ensures this runs when userLocation updates
 
   // Fetch user location immediately on component mount
   useEffect(() => {
@@ -95,7 +162,7 @@ const SinglePage = () => {
       <div
         ref={mapContainer}
         className="map-container"
-        style={{ height: "300px", width: "100%" }}></div>
+        style={{ height: "50vh", minHeight: "400px", width: "250%" }}></div>
     </div>
   );
 };
