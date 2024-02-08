@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; // Centers content vertically if needed
-  height: 100vh; // Occupies at least the full viewport height
+  justify-content: flex-start; // Adjust to flex-start for better control over content alignment
+  min-height: 100vh; // Use min-height to ensure content can expand beyond the viewport height if needed
   padding: 20px;
   gap: 20px;
   width: 100%; // Ensures it occupies the full width
@@ -16,9 +16,10 @@
 
     .company-image {
       width: 100%;
-      height: 100px; // Fixed height for uniformity
+      max-width: 600px; // Control the image width to not span the entire container
+      height: auto; // Adjust height to auto for maintaining aspect ratio
       object-fit: cover; // Ensures the image covers the area nicely
-      border-radius: 10px 10px 0 0; // Rounded top corners
+      border-radius: 10px; // Adjusted for uniformity
     }
 
     .company-name {
@@ -29,15 +30,21 @@
   .company-details {
     width: 100%;
     max-width: 600px;
-    margin: 0 auto; // Centers the details section horizontally
-    // background-color: #f0f0f0;
-    border-radius: 10px;
+    margin: 20px auto; // Ensure there's space around the details section
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; // Consistency in design
 
     p {
       margin: 10px 0;
     }
   }
+
+  #map {
+    width: 100%; // Full container width
+    height: 400px; // Fixed height for the map
+    margin-top: 20px; // Space from the preceding content
+    border-radius: 10px; // Optional: for consistent design
+    overflow: hidden; // If you have a border-radius
+  }
 }
-//

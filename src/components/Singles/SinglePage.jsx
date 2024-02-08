@@ -1,24 +1,16 @@
-import React, { useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React, { useState, useEffect } from "react";
+import mapboxgl from "mapbox-gl";
 import "./SinglePage.scss";
 import movers from "../../assets/movers.jpeg";
 
-// Replace 'YOUR_GOOGLE_MAPS_API_KEY' with your actual Google Maps API key
-const googleMapsApiKey = "YOUR_GOOGLE_MAPS_API_KEY";
-
-const containerStyle = {
-  width: "100%", // Use full width to make it responsive
-  height: "400px", // Adjust the height as needed
-};
-
-// Default center of the map if user's location is not available
-const defaultCenter = {
-  lat: -34.397,
-  lng: 150.644,
-};
+// Set your Mapbox access token here
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiZ3JhZGFuIiwiYSI6ImNsc2QwOGhybDB3dnQyaW9hZ3l3cXJxbncifQ.2mVTkWGbItvkXiXgd_-vMw";
 
 const SinglePage = () => {
-  const [location, setLocation] = useState(null);
+  const [lng, setLng] = useState(-74); // Default longitude
+  const [lat, setLat] = useState(40.7); // Default latitude
+  const [zoom, setZoom] = useState(9); // Default zoom level
 
   const company = {
     name: "Cheap Movers Co.",
@@ -26,23 +18,46 @@ const SinglePage = () => {
     location: "New York",
     vehicleType: "Truck",
     imageUrl: movers,
-    description: "Here's how you do it:",
+    description:
+      "To set the textDecoration to none in a <Link> component from React Router, you should pass the style object with textDecoration property set to 'none'. Here's how you do it:",
   };
 
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        ({ coords }) => {
-          setLocation({
-            lat: coords.latitude,
-            lng: coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error obtaining location:", error);
-        }
-      );
-    }
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: "map", // container ID
+      style: "mapbox://styles/mapbox/streets-v11", // style URL
+      center: [lng, lat], // starting position [lng, lat]
+      zoom: zoom, // starting zoom
+    });
+
+    return () => map.remove(); // Clean up on unmount
+  }, []);
+
+  const connectUser = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const newLng = position.coords.longitude;
+        const newLat = position.coords.latitude;
+        setLng(newLng);
+        setLat(newLat);
+        setZoom(14); // Adjust zoom for closer view
+
+        // Assuming you have map as a useRef() to access the Mapbox instance
+        map.current.flyTo({
+          center: [newLng, newLat],
+          essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+        });
+
+        // Console log the position to save in the database
+        console.log("User Location:", { longitude: newLng, latitude: newLat });
+
+        // Here you would typically update the state or context that holds user location,
+        // or directly save this location to your database via an API call
+      },
+      (error) => {
+        console.error("Error obtaining location:", error);
+      }
+    );
   };
 
   return (
@@ -61,15 +76,8 @@ const SinglePage = () => {
         </p>
         <p className="company-description">{company.description}</p>
       </div>
-      <button onClick={getCurrentLocation}>Connect</button>
-      <LoadScript googleMapsApiKey={googleMapsApiKey}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={location || defaultCenter}
-          zoom={10}>
-          {location && <Marker position={location} />}
-        </GoogleMap>
-      </LoadScript>
+      <button onClick={connectUser}>Connect</button>
+      <div id="map" style={{ height: "300px", width: "100%" }}></div>
     </div>
   );
 };
