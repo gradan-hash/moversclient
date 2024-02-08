@@ -11,6 +11,7 @@ import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import SinglePage from "./components/Singles/SinglePage";
 import Messages from "./components/messages/Messages";
+import SingleStorage from "./components/Singles/Singlestorage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -55,6 +56,10 @@ function App() {
         {
           path: "/messages",
           element: <Messages />,
+        },
+        {
+          path: "/singlestorage",
+          element: <SingleStorage />,
         },
       ],
     },
