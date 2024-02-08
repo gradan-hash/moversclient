@@ -10,6 +10,7 @@ import Register from "./components/register/Register";
 import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import SinglePage from "./components/Singles/SinglePage";
+import Messages from "./components/messages/Messages";
 
 function App() {
   const queryClient = new QueryClient();
@@ -50,6 +51,10 @@ function App() {
         {
           path: "/singlepage",
           element: <SinglePage />,
+        },
+        {
+          path: "/messages",
+          element: <Messages />,
         },
       ],
     },

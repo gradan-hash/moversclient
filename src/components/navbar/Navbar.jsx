@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./navbar.scss"
+import "./navbar.scss";
+import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
+
 const Navbar = () => {
+  const messageCount = 0; // Assuming this could be dynamic
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -9,8 +13,14 @@ const Navbar = () => {
           MoversConnector
         </Link>
         <div className="nav-menu">
-          <Link to="/about" className="nav-item">
-            About
+          <Link
+            to="/messages"
+            style={{ textDecoration: "none" }}
+            className="nav-item">
+            <div className="message-icon-wrapper">
+              <MarkChatUnreadIcon className="messageicon" />
+              <span className="message-count">{messageCount}</span>
+            </div>
           </Link>
           <Link to="/contact" className="nav-item">
             Contact

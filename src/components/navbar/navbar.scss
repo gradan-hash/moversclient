@@ -49,7 +49,6 @@ input {
   margin-right: 10px;
   border: 2px solid #ddd;
   outline: none;
-  
 }
 
 button {
@@ -62,4 +61,29 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.message-icon-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.message-count {
+  position: absolute;
+  top: -10px; // Adjust as needed
+  right: -10px; // Adjust as needed
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.messageicon {
+  font-size: 24px; // Adjust icon size as needed
 }
