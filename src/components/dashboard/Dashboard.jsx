@@ -3,6 +3,7 @@ import "./dashboard.scss";
 import SearchBar from "../searchbar/SearchBar";
 import CompanyList from "../CompanyList/CompanyList";
 import { Link } from "react-router-dom";
+import StorageList from "../CompanyList/StorageList";
 
 const Dashboard = () => {
   const [filter, setFilter] = useState({
@@ -26,7 +27,7 @@ const Dashboard = () => {
       <CompanyList filter={filter} />
       <div className="separator">Storage Services Companies</div>
       <Link to="/singlestorage"></Link>
-      <CompanyList type="storage" filter={filter} />
+      <StorageList type="storage" filter={filter} />
     </div>
   );
 };

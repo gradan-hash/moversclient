@@ -6,7 +6,7 @@ import location from "../../assets/location.jpeg";
 import maths from "../../assets/maths.jpeg";
 import truck from "../../assets/trucks.jpeg";
 import { Link } from "react-router-dom";
-const CompanyList = ({ filter }) => {
+const StorageList = ({ filter }) => {
   const companies = [
     {
       name: "Cheap Movers Co.",
@@ -60,7 +60,7 @@ const CompanyList = ({ filter }) => {
             alt={company.name}
             className="company-image"
           />
-          <Link to="/singlestorage" style={{textDecoration: "none" }}>
+          <Link to="/singlestorage" style={{ textDecoration: "none" }}>
             <div className="company-info">
               <h3>{company.name}</h3>
               <p>Quote: {company.quote}</p>
@@ -72,4 +72,4 @@ const CompanyList = ({ filter }) => {
   );
 };
 
-export default CompanyList;
+export default StorageList;
