@@ -9,6 +9,7 @@ import Footer from "./components/footer/Footer";
 import Register from "./components/register/Register";
 import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import SinglePage from "./components/Singles/SinglePage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -45,6 +46,10 @@ function App() {
         {
           path: "/dashboard",
           element: <Dashboard />,
+        },
+        {
+          path: "/singlepage",
+          element: <SinglePage />,
         },
       ],
     },

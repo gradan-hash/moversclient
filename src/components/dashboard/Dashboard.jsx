@@ -17,9 +17,12 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <div>search io?</div>
-      <CompanyList filter={filter} />
+      <div>
+        <br></br>
+      </div>
       <SearchBar onSearch={handleSearch} />
+
+      <CompanyList filter={filter} />
     </div>
   );
 };
