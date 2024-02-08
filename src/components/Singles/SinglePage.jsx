@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "./SinglePage.scss";
 import movers from "../../assets/movers.jpeg";
 
-// Set your Mapbox access token here
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZ3JhZGFuIiwiYSI6ImNsc2QwOGhybDB3dnQyaW9hZ3l3cXJxbncifQ.2mVTkWGbItvkXiXgd_-vMw";
 
 const SinglePage = () => {
-  const [lng, setLng] = useState(-74); // Default longitude
-  const [lat, setLat] = useState(40.7); // Default latitude
-  const [zoom, setZoom] = useState(9); // Default zoom level
+  const [userLocation, setUserLocation] = useState(null);
+  const mapContainer = useRef(null);
+  const map = useRef(null);
 
   const company = {
     name: "Cheap Movers Co.",
@@ -18,47 +17,63 @@ const SinglePage = () => {
     location: "New York",
     vehicleType: "Truck",
     imageUrl: movers,
-    description:
-      "To set the textDecoration to none in a <Link> component from React Router, you should pass the style object with textDecoration property set to 'none'. Here's how you do it:",
+    description: "Description about the company...",
+  };
+
+  const watchIdRef = useRef(null);
+
+  const fetchLocationAndUpdateMap = () => {
+    if ("geolocation" in navigator) {
+      watchIdRef.current = navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ lat: latitude, lng: longitude });
+          if (map.current) {
+            map.current.flyTo({
+              center: [longitude, latitude],
+              essential: true,
+              zoom: 14,
+            });
+          }
+        },
+        (error) => {
+          console.error("Error obtaining location:", error);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    }
   };
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: "map", // container ID
-      style: "mapbox://styles/mapbox/streets-v11", // style URL
-      center: [lng, lat], // starting position [lng, lat]
-      zoom: zoom, // starting zoom
-    });
-
-    return () => map.remove(); // Clean up on unmount
+    return () => {
+      if (watchIdRef.current) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
+    };
   }, []);
 
-  const connectUser = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const newLng = position.coords.longitude;
-        const newLat = position.coords.latitude;
-        setLng(newLng);
-        setLat(newLat);
-        setZoom(14); // Adjust zoom for closer view
+  console.log(userLocation);
+  // Initialize map with user's location
+  useEffect(() => {
+    if (userLocation && !map.current) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [userLocation.lng, userLocation.lat],
+        zoom: 14,
+      });
 
-        // Assuming you have map as a useRef() to access the Mapbox instance
-        map.current.flyTo({
-          center: [newLng, newLat],
-          essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-        });
+      new mapboxgl.Marker()
+        .setLngLat([userLocation.lng, userLocation.lat])
+        .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("You are here"))
+        .addTo(map.current);
+    }
+  }, [userLocation]);
 
-        // Console log the position to save in the database
-        console.log("User Location:", { longitude: newLng, latitude: newLat });
-
-        // Here you would typically update the state or context that holds user location,
-        // or directly save this location to your database via an API call
-      },
-      (error) => {
-        console.error("Error obtaining location:", error);
-      }
-    );
-  };
+  // Fetch user location immediately on component mount
+  useEffect(() => {
+    fetchLocationAndUpdateMap();
+  }, []);
 
   return (
     <div className="single-page">
@@ -76,8 +91,11 @@ const SinglePage = () => {
         </p>
         <p className="company-description">{company.description}</p>
       </div>
-      <button onClick={connectUser}>Connect</button>
-      <div id="map" style={{ height: "300px", width: "100%" }}></div>
+      <button onClick={fetchLocationAndUpdateMap}>Connect</button>
+      <div
+        ref={mapContainer}
+        className="map-container"
+        style={{ height: "300px", width: "100%" }}></div>
     </div>
   );
 };
