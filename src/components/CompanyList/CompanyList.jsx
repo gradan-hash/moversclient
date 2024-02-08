@@ -60,7 +60,7 @@ const CompanyList = ({ filter }) => {
             alt={company.name}
             className="company-image"
           />
-          <Link to="/singlepage" style={{textDecoration: "none" }}>
+          <Link to="/singlepage" style={{ textDecoration: "none" }}>
             <div className="company-info">
               <h3>{company.name}</h3>
               <p>Quote: {company.quote}</p>

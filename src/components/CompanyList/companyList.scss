@@ -13,7 +13,9 @@
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  overflow: hidden; // Ensures the border-radius applies cleanly
+  overflow: hidden; 
+  
+
   &:hover {
     transform: scale(1.05);
   }
@@ -21,8 +23,9 @@
   .company-image {
     width: 100%;
     height: 100px; // Fixed height for uniformity
-    object-fit: cover; // Ensures the image covers the area nicely
-    border-radius: 10px 10px 0 0; // Rounded top corners
+    object-fit: cover; 
+    border-radius: 10px 10px 0 0; 
+    
   }
 
   .company-info {
