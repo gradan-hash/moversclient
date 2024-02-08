@@ -43,7 +43,7 @@ const CompanyList = ({ filter }) => {
 
   return (
     <div className="company-list">
-      <SearchBar onSearch={handleSearch} />
+      
 
       {filteredCompanies.map((company, index) => (
         <div key={index} className="company-card">
