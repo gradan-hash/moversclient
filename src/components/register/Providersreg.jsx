@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./register.scss";
 import { Link } from "react-router-dom";
 
-function Register() {
+function Providersreg() {
   const [formData, setFormData] = useState({
     phoneNumber: "",
     email: "",
@@ -67,15 +67,15 @@ function Register() {
         <button type="submit">Register</button>
         <div className="loggedin">
           <strong>
-            <Link to="/login">login</Link>
+            <Link to="/serviceproviderslogin">login</Link>
           </strong>
         </div>
         <span>
-          <Link to="/serviceprovidersregister">register as service provider</Link>
+          <Link to="/companyregister">register as service provider</Link>
         </span>
       </form>
     </div>
   );
 }
 
-export default Register;
+export default Providersreg;
