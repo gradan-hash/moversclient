@@ -56,7 +56,7 @@ function Login() {
           </strong>
         </div>
         <span>
-          <Link to="/serviceproviderslogin">login as service provider</Link>
+          <Link to="/login">login as service client</Link>
         </span>
       </form>
     </div>

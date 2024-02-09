@@ -71,7 +71,7 @@ function Providersreg() {
           </strong>
         </div>
         <span>
-          <Link to="/companyregister">register as service provider</Link>
+          <Link to="/register">register as service client</Link>
         </span>
       </form>
     </div>
