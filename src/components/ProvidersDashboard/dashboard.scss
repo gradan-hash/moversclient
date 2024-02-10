@@ -1,0 +1,47 @@
+.dashboard {
+  margin-left: 250px; // Space for the sidebar
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; // Adjust the spacing between rectangles as needed
+  width: calc(100vw - 230px); // Occupies remaining screen width minus sidebar
+  margin-top: 23px;
+  height: 100vh;
+  background-color: gray;
+
+  @media (max-width: 768px) {
+    margin-left: 0; // Full width on small screens
+    width: 100vw; // Adjusts to full viewport width on smaller screens
+    flex-direction: column;
+  }
+}
+
+.dashboard__row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 5px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.dashboard__rectangle {
+  background-color: #f0f0f0;
+  flex-basis: calc(
+    50% - 10px
+  ); // Adjusts based on the gap to ensure two per row
+  display: flex;
+  align-items: center;
+
+  padding: 30px;
+  box-sizing: border-box;
+  height: 44vh;
+  color: black;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    flex-basis: 100%; // Full width on small screens
+  }
+}

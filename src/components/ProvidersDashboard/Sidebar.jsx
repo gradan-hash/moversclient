@@ -6,15 +6,25 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__section sidebar__top">
-        <Link className="sidebar__link">Current Orders</Link>
-        <Link className="sidebar__link">Ongoing Orders</Link>
+        <Link className="sidebar__link">
+          <strong>Current Orders</strong>
+        </Link>
+        <Link className="sidebar__link">
+          <strong>Ongoing Orders</strong>
+        </Link>
       </div>
       <div className="sidebar__section sidebar__center">
-        <Link className="sidebar__link">Reports</Link>
-        <Link className="sidebar__link">File Upload</Link>
+        <Link className="sidebar__link">
+          <strong>Reports</strong>
+        </Link>
+        <Link className="sidebar__link">
+          <strong>File Upload</strong>
+        </Link>
       </div>
       <div className="sidebar__section sidebar__bottom">
-        <Link className="sidebar__link">Messages</Link>
+        <Link className="sidebar__link">
+          <strong>Messages</strong>
+        </Link>
       </div>
     </div>
   );
