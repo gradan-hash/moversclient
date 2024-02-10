@@ -1,25 +1,32 @@
 .search-bar {
   display: flex;
   justify-content: center;
-  
+  margin-bottom: 20px; // Provides space between the search bar and the next content block
 
   input {
+    width: 70%;
     padding: 10px;
-    margin-right: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 5px 0 0 5px; // Rounded corners on the left side
+    font-size: 16px; // Increases readability
+
+    &:focus {
+      outline: none;
+      border-color: #007bff; // Highlight focus with a blue border
+    }
   }
 
   button {
     padding: 10px 20px;
+    border: none;
+    border-radius: 0 5px 5px 0; // Rounded corners on the right side
     background-color: #007bff;
     color: white;
-    border: none;
-    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
 
     &:hover {
-      background-color: #0056b3;
+      background-color: #0056b3; // Darker shade on hover for interaction feedback
     }
   }
 }

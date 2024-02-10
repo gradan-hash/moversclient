@@ -4,6 +4,7 @@ import SearchBar from "../searchbar/SearchBar";
 import CompanyList from "../CompanyList/CompanyList";
 import { Link } from "react-router-dom";
 import StorageList from "../CompanyList/StorageList";
+import Sidebar from "../ProvidersDashboard/Sidebar";
 
 const Dashboard = () => {
   const [filter, setFilter] = useState({
@@ -17,18 +18,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <div>
-        <br></br>
-      </div>
-      <div className="headerr">Moving Companies</div>
-      <SearchBar onSearch={handleSearch} />
+    <>
+      <Sidebar />
 
-      <CompanyList filter={filter} />
-      <div className="separator">Storage Services Companies</div>
-      <Link to="/singlestorage"></Link>
-      <StorageList type="storage" filter={filter} />
-    </div>
+      <div className="dashboard">
+      <br></br>
+        <div className="headerr">Moving $ storage Companies</div>
+        <SearchBar onSearch={handleSearch} />
+
+        <CompanyList filter={filter} />
+        {/* <div className="separator">Storage Services Companies</div>
+      <Link to="/singlestorage">
+        <StorageList type="storage" filter={filter} />
+      </Link> */}
+      </div>
+    </>
   );
 };
 

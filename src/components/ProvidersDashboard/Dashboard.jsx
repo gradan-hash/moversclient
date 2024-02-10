@@ -1,7 +1,7 @@
 import React from "react";
 import "./dashboard.scss";
 import { Link } from "react-router-dom";
-import Sidebar from "./Sidebar";
+
 
 const Dashboard = () => {
   return (

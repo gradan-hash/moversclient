@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import moment from "moment";
 import "./message.scss";
 
-const Messages = () => {
+const Messagespro = () => {
   // Using an array to track the expanded state of each message
   const [expandedIds, setExpandedIds] = useState([]);
 
   // Example hardcoded messages
-  const messagespro = [
+  const messages = [
     {
       id: 1,
       content:
