@@ -44,7 +44,7 @@ function Login() {
         />
 
         <button type="submit">
-          <Link to="/dashboard">Login</Link>
+          <Link to="/providerdashboard">Login</Link>
         </button>
         <div className="loggedin">
           <strong>

@@ -13,6 +13,7 @@ import SinglePage from "./components/Singles/SinglePage";
 import Messages from "./components/messages/Messages";
 import SingleStorage from "./components/Singles/Singlestorage";
 import Providersreg from "./components/register/Providersreg";
+import ProvidersDash from "./components/ProvidersDashboard/ProvidersDash";
 
 function App() {
   const queryClient = new QueryClient();
@@ -69,6 +70,10 @@ function App() {
         {
           path: "/serviceproviderslogin",
           element: <Providersreg />,
+        },
+        {
+          path: "/providerdashboard",
+          element: <ProvidersDash />,
         },
       ],
     },
