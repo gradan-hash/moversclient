@@ -16,6 +16,7 @@ import Providersreg from "./components/register/Providersreg";
 import ProvidersDash from "./components/ProvidersDashboard/ProvidersDash";
 import CurrentOrders from "./components/Orders/CurrentOrders";
 import OngoingOrders from "./components/Orders/OngoingOrders";
+import Reports from "./components/Orders/Reports";
 
 function App() {
   const queryClient = new QueryClient();
@@ -84,6 +85,10 @@ function App() {
         {
           path: "/ongoingorders",
           element: <OngoingOrders />,
+        },
+        {
+          path: "/reports",
+          element: <Reports />,
         },
       ],
     },

@@ -14,7 +14,7 @@ const Sidebar = () => {
         </Link>
       </div>
       <div className="sidebar__section sidebar__center">
-        <Link className="sidebar__link">
+        <Link className="sidebar__link" to="/reports">
           <strong>Reports</strong>
         </Link>
         <Link className="sidebar__link">
