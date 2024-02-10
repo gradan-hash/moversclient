@@ -9,7 +9,7 @@ const Sidebar = () => {
         <Link className="sidebar__link" to="/currentorders">
           <strong>Current Orders</strong>
         </Link>
-        <Link className="sidebar__link">
+        <Link className="sidebar__link" to="/ongoingorders">
           <strong>Ongoing Orders</strong>
         </Link>
       </div>

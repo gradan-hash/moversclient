@@ -15,6 +15,7 @@ import SingleStorage from "./components/Singles/Singlestorage";
 import Providersreg from "./components/register/Providersreg";
 import ProvidersDash from "./components/ProvidersDashboard/ProvidersDash";
 import CurrentOrders from "./components/Orders/CurrentOrders";
+import OngoingOrders from "./components/Orders/OngoingOrders";
 
 function App() {
   const queryClient = new QueryClient();
@@ -79,6 +80,10 @@ function App() {
         {
           path: "/currentorders",
           element: <CurrentOrders />,
+        },
+        {
+          path: "/ongoingorders",
+          element: <OngoingOrders />,
         },
       ],
     },

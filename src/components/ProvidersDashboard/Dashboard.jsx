@@ -7,7 +7,6 @@ const Dashboard = () => {
   return (
     <>
    
-
       <div className="dashboard">
         <div className="dashboard__row dashboard__top">
           <div className="dashboard__rectangle">
@@ -17,7 +16,10 @@ const Dashboard = () => {
           </div>
 
           <div className="dashboard__rectangle">
-            <strong>Ongoing Orders</strong>
+            <Link to="/ongoingorders" style={{ textDecoration: "none" }}>
+              {" "}
+              <strong>Ongoing Orders</strong>
+            </Link>
           </div>
         </div>
         <div className="dashboard__row dashboard__bottom">

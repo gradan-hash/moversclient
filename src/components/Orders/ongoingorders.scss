@@ -1,0 +1,40 @@
+.ongoingOrders {
+  height: 100vh;
+
+  margin-left: 268px; // Space for the sidebar
+
+  // width: 100vw;
+  width: calc(100vw - 250px);
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  top: ;
+
+  table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 1200px;
+
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #f0f0f0;
+    }
+
+    tbody tr:hover {
+      background-color: #d0e0f0;
+    }
+  }
+}
