@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__section sidebar__top">
-        <Link className="sidebar__link">
+        <Link className="sidebar__link" to="/currentorders">
           <strong>Current Orders</strong>
         </Link>
         <Link className="sidebar__link">
