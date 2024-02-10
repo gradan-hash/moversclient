@@ -17,6 +17,7 @@ import ProvidersDash from "./components/ProvidersDashboard/ProvidersDash";
 import CurrentOrders from "./components/Orders/CurrentOrders";
 import OngoingOrders from "./components/Orders/OngoingOrders";
 import Reports from "./components/Orders/Reports";
+import Messagespro from "./components/messages/messagespro";
 
 function App() {
   const queryClient = new QueryClient();
@@ -61,6 +62,10 @@ function App() {
         {
           path: "/messages",
           element: <Messages />,
+        },
+        {
+          path: "/checkmessages",
+          element: <Messagespro />,
         },
         {
           path: "/singlestorage",

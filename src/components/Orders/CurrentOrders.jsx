@@ -48,10 +48,8 @@ const CurrentOrders = () => {
         <table>
           <thead>
             <tr>
-              <strong>
-                {" "}
-                <th>ID</th>
-              </strong>
+              {" "}
+              <th>ID</th>
               <th>
                 <strong>Name of Customer</strong>
               </th>
