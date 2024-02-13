@@ -19,6 +19,7 @@ import OngoingOrders from "./components/Orders/OngoingOrders";
 import Reports from "./components/Orders/Reports";
 import Messagespro from "./components/messages/messagespro";
 import Upload from "./components/Upload/Upload";
+import Sidebar from "./components/ProvidersDashboard/Sidebar";
 
 function App() {
   const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <Navbar />
           <Outlet />
+          <Sidebar />
         </QueryClientProvider>
       </div>
     );
