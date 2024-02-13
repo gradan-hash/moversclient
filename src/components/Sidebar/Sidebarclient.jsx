@@ -9,20 +9,20 @@ const Sidebarclient = () => {
         <Link className="sidebar__link" to="/">
           <strong>Moving services</strong>
         </Link>
-        <Link className="sidebar__link" to="/ongoingorders">
+        <Link className="sidebar__link" to="/storage services">
           <strong>Storage services</strong>
         </Link>
       </div>
       <div className="sidebar__section sidebar__center">
-        <Link className="sidebar__link" to="/reports">
+        <Link className="sidebar__link" to="/mytrips">
           <strong>My Trips</strong>
         </Link>
-        <Link to="/uploaditems" className="sidebar__link">
+        <Link to="/ongoingorders" className="sidebar__link">
           <strong>Ongoing Orders</strong>
         </Link>
       </div>
       <div className="sidebar__section sidebar__bottom">
-        <Link className="sidebar__link" to="/checkmessages">
+        <Link className="sidebar__link" to="/messages">
           <strong>Messages</strong>
         </Link>
       </div>
