@@ -20,6 +20,7 @@ import Reports from "./components/Orders/Reports";
 import Messagespro from "./components/messages/messagespro";
 import Upload from "./components/Upload/Upload";
 import Sidebar from "./components/ProvidersDashboard/Sidebar";
+import Storageservices from "./components/dashboard/Storageservices";
 
 function App() {
   const queryClient = new QueryClient();
@@ -30,7 +31,6 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <Navbar />
           <Outlet />
-          <Sidebar />
         </QueryClientProvider>
       </div>
     );
@@ -53,6 +53,10 @@ function App() {
         {
           path: "/",
           element: <Dashboard />,
+        },
+        {
+          path: "/storage services",
+          element: <Storageservices />,
         },
         {
           path: "/singlepage",
