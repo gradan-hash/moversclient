@@ -22,6 +22,7 @@ import Upload from "./components/Upload/Upload";
 import Sidebar from "./components/ProvidersDashboard/Sidebar";
 import Storageservices from "./components/dashboard/Storageservices";
 import MyTrips from "./components/Trips/Mytrips";
+import ClientOrders from "./components/Orders/ClientOrders";
 
 function App() {
   const queryClient = new QueryClient();
@@ -62,6 +63,10 @@ function App() {
         {
           path: "/mytrips",
           element: <MyTrips />,
+        },
+        {
+          path: "/clientongoingorders",
+          element: <ClientOrders />,
         },
         {
           path: "/singlepage",
