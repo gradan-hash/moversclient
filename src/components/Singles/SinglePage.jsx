@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "./SinglePage.scss";
 import movers from "../../assets/movers.jpeg";
+import Sidebarclient from "../Sidebar/Sidebarclient";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZ3JhZGFuIiwiYSI6ImNsc2QwOGhybDB3dnQyaW9hZ3l3cXJxbncifQ.2mVTkWGbItvkXiXgd_-vMw";
@@ -108,62 +109,58 @@ const SinglePage = () => {
     };
   }, []);
 
-  // Initialize map with user's location
   useEffect(() => {
     if (userLocation && !map.current && mapContainer.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [userLocation.lng, userLocation.lat], // Ensure these are valid numbers
+        center: [userLocation.lng, userLocation.lat],
         zoom: 14,
       });
 
-      // Wait for the map to load before adding the marker
       map.current.on("load", () => {
-        // Adding the user location marker
         new mapboxgl.Marker()
           .setLngLat([userLocation.lng, userLocation.lat])
           .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("You are here"))
           .addTo(map.current);
 
-        // Ensure the destination marker is added here as well
         new mapboxgl.Marker({ color: "red" })
           .setLngLat([destination.lng, destination.lat])
           .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("Destination"))
           .addTo(map.current);
-
-        // If there's a need to draw a line between markers, ensure that happens here as well
       });
     }
-  }, [userLocation]); // Dependency array ensures this runs when userLocation updates
+  }, [userLocation]);
 
-  // Fetch user location immediately on component mount
   useEffect(() => {
     fetchLocationAndUpdateMap();
   }, []);
 
   return (
-    <div className="single-page">
-      <img
-        src={company.imageUrl}
-        alt={company.name}
-        className="company-image"
-      />
-      <div className="company-details">
-        <h2 className="company-name">{company.name}</h2>
-        <p className="company-location">Location: {company.location}</p>
-        <p className="company-quote">Quote: {company.quote}</p>
-        <p className="company-vehicle-type">
-          Vehicle Type: {company.vehicleType}
-        </p>
-        <p className="company-description">{company.description}</p>
+    <>
+      <Sidebarclient />
+
+      <div className="single-page">
+        <div className="details-left">
+          <img
+            src={company.imageUrl}
+            alt={company.name}
+            className="company-image"
+          />
+          <div className="company-details">
+            <h2 className="company-name">{company.name}</h2>
+            <p className="company-location">Location: {company.location}</p>
+            <p className="company-quote">Quote: {company.quote}</p>
+            <p className="company-vehicle-type">
+              Vehicle Type: {company.vehicleType}
+            </p>
+            <p className="company-description">{company.description}</p>
+          </div>
+        </div>
+        <div className="map-bottom" ref={mapContainer}></div>
+        <button onClick={fetchLocationAndUpdateMap}>Connect</button>
       </div>
-      <button onClick={fetchLocationAndUpdateMap}>Connect</button>
-      <div
-        ref={mapContainer}
-        className="map-container"
-        style={{ height: "50vh", minHeight: "400px", width: "250%" }}></div>
-    </div>
+    </>
   );
 };
 

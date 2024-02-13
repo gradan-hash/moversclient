@@ -25,10 +25,10 @@ const Messagespro = () => {
 
   // Toggles the expanded state for a given message ID
   const toggleExpand = (id) => {
-    setExpandedIds((currentIds) =>
-      currentIds.includes(id)
-        ? currentIds.filter((expandedId) => expandedId !== id)
-        : [...currentIds, id]
+    setExpandedIds((prevIds) =>
+      prevIds.includes(id)
+        ? prevIds.filter((prevId) => prevId !== id)
+        : [...prevIds, id]
     );
   };
 
