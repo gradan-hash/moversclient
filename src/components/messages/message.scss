@@ -1,5 +1,7 @@
+
+
 .message {
-  margin-top: 60px;
+  margin-top: 70px;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   color: black;
@@ -8,13 +10,21 @@
   margin-bottom: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-left: 268px;
 
   &:hover {
     background-color: #e9e9e9;
   }
 
+  
+
   &.expanded {
     cursor: default;
+    background-color: #d6eaff; // Light blue background for expanded messages
+  }
+
+  .sender-info {
+    font-weight: bold; // Highlight username and location
   }
 
   .time-sent {

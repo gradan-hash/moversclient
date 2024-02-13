@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import moment from "moment";
 import "./message.scss";
+import Sidebar from "../ProvidersDashboard/Sidebar";
 
 const Messagespro = () => {
-  // Using an array to track the expanded state of each message
-  const [expandedIds, setExpandedIds] = useState([]);
+  const [expandedIds, setExpandedIds] = useState([]); // Tracks expanded message IDs
+  const [replies, setReplies] = useState({}); // Stores replies keyed by message ID
 
-  // Example hardcoded messages
   const messages = [
     {
       id: 1,
@@ -22,41 +22,79 @@ const Messagespro = () => {
     },
   ];
 
+  // Toggles the expanded state for a given message ID
   const toggleExpand = (id) => {
-    setExpandedIds(
-      expandedIds.includes(id)
-        ? expandedIds.filter((expandedId) => expandedId !== id)
-        : [...expandedIds, id]
+    setExpandedIds((currentIds) =>
+      currentIds.includes(id)
+        ? currentIds.filter((expandedId) => expandedId !== id)
+        : [...currentIds, id]
     );
   };
 
+  // Updates the reply for a given message ID
+  const handleReplyChange = (id, value) => {
+    setReplies((currentReplies) => ({
+      ...currentReplies,
+      [id]: value,
+    }));
+  };
+
+  // Sends the reply for a given message ID and prevents expanding/collapsing
+  const sendReply = (id, e) => {
+    e.stopPropagation(); // Prevents the click from propagating to the message div
+    console.log(`Reply to message ${id}: ${replies[id]}`);
+    // Implement sending reply logic here
+  };
+
   return (
-    <div className="messages">
-      {messages.map((message) => (
-        <div
-          key={message.id}
-          className={`message ${
-            expandedIds.includes(message.id) ? "expanded" : ""
-          }`}
-          onClick={() => toggleExpand(message.id)}>
-          <p>
-            {expandedIds.includes(message.id)
-              ? message.content
-              : `${message.content.substring(0, 50)}...`}
-          </p>
-          <p className="time-sent">{moment(message.timeSent).format("LLLL")}</p>
-          {expandedIds.includes(message.id) && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleExpand(message.id);
-              }}>
-              Close
-            </button>
-          )}
-        </div>
-      ))}
-    </div>
+    <>
+      <Sidebar />
+      <div className="messages">
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`message ${
+              expandedIds.includes(message.id) ? "expanded" : ""
+            }`}
+            onClick={() => toggleExpand(message.id)}>
+            <p>
+              {expandedIds.includes(message.id)
+                ? message.content
+                : `${message.content.substring(0, 50)}...`}
+            </p>
+            <p className="time-sent">
+              {moment(message.timeSent).format("LLLL")}
+            </p>
+            {expandedIds.includes(message.id) && (
+              <div className="reply-section">
+                <div
+                  className="reply-container"
+                  onClick={(e) => e.stopPropagation()}>
+                  <input
+                    type="text"
+                    placeholder="Type your reply here..."
+                    value={replies[message.id] || ""}
+                    onChange={(e) =>
+                      handleReplyChange(message.id, e.target.value)
+                    }
+                  />
+                  <button onClick={(e) => sendReply(message.id, e)}>
+                    Send
+                  </button>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleExpand(message.id);
+                  }}>
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

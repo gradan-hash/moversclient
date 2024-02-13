@@ -18,6 +18,7 @@ import CurrentOrders from "./components/Orders/CurrentOrders";
 import OngoingOrders from "./components/Orders/OngoingOrders";
 import Reports from "./components/Orders/Reports";
 import Messagespro from "./components/messages/messagespro";
+import Upload from "./components/Upload/Upload";
 
 
 function App() {
@@ -95,6 +96,10 @@ function App() {
         {
           path: "/reports",
           element: <Reports />,
+        },
+        {
+          path: "/uploaditems",
+          element: <Upload />,
         },
       ],
     },
