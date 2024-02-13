@@ -6,19 +6,19 @@ const Sidebarclient = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__section sidebar__top">
-        <Link className="sidebar__link" to="/currentorders">
-          <strong>Current Orders</strong>
+        <Link className="sidebar__link" to="/">
+          <strong>Moving services</strong>
         </Link>
         <Link className="sidebar__link" to="/ongoingorders">
-          <strong>Ongoing Orders</strong>
+          <strong>Storage services</strong>
         </Link>
       </div>
       <div className="sidebar__section sidebar__center">
         <Link className="sidebar__link" to="/reports">
-          <strong>Reports</strong>
+          <strong>My Trips</strong>
         </Link>
         <Link to="/uploaditems" className="sidebar__link">
-          <strong>File Upload</strong>
+          <strong>Ongoing Orders</strong>
         </Link>
       </div>
       <div className="sidebar__section sidebar__bottom">

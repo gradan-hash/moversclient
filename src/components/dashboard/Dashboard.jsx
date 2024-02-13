@@ -23,14 +23,11 @@ const Dashboard = () => {
 
       <div className="dashboard">
         <br></br>
-        <div className="headerr">Moving $ storage Companies</div>
+        
         <SearchBar onSearch={handleSearch} />
 
         <CompanyList filter={filter} />
-        {/* <div className="separator">Storage Services Companies</div>
-      <Link to="/singlestorage">
-        <StorageList type="storage" filter={filter} />
-      </Link> */}
+        
       </div>
     </>
   );
