@@ -20,7 +20,6 @@ import Reports from "./components/Orders/Reports";
 import Messagespro from "./components/messages/messagespro";
 import Upload from "./components/Upload/Upload";
 
-
 function App() {
   const queryClient = new QueryClient();
 
@@ -42,10 +41,6 @@ function App() {
 
       children: [
         {
-          path: "/",
-          element: <Homepage />,
-        },
-        {
           path: "/register",
           element: <Register />,
         },
@@ -54,7 +49,7 @@ function App() {
           element: <Login />,
         },
         {
-          path: "/dashboard",
+          path: "/",
           element: <Dashboard />,
         },
         {
