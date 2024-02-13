@@ -2,36 +2,86 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; // Ensure content is centered both vertically and horizontally
   padding: 20px;
+  margin-top: 70px;
+  width: 50vw; // Adjust the width for better centering and appearance
+  max-width: 600px; // Ensure it doesn't get too wide on larger screens
+  min-height: 80vh;
+  margin-left: auto; // Center the container
+  margin-right: auto; // Center the container
+  background-color: #f9f9f9; // A light background color that contrasts well with white
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Add a subtle shadow for depth
+  border-radius: 8px; // Rounded corners for a softer look
+  color: #333; // Use a darker color for text for better readability
+
   .user-image {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     margin-bottom: 20px;
+    border: 3px solid #007bff; // Add a border color similar to the button for consistency
   }
-  .upload-top,
+
+  .upload-top {
+    width: 50%;
+    height: 50%;
+    text-align: center;
+  }
   .upload-bottom {
     width: 100%;
     text-align: center;
   }
+
   .upload-center {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 90%; // Make it slightly less wide than the container for padding effect
+
     .form-group {
+      width: 100%; // Full width to align with the design
       margin-bottom: 20px;
+
       label {
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
+        font-size: 1rem; // Increase font size for readability
+        color: #555; // Darker label color for contrast
       }
+
       .radio-options {
+        display: flex;
+        justify-content: space-around; // Spread the radio buttons evenly
         input {
           margin-right: 5px;
+          cursor: pointer; // Indicate it's clickable
+        }
+        label {
+          cursor: pointer; // Make sure labels are also clickable for better UX
         }
       }
+
       input[type="file"] {
         display: block;
+        width: 100%; // Full width
+        padding: 10px; // Add some padding for better touch
+        border: 1px solid #ccc; // Subtle border
+        border-radius: 4px; // Rounded corners
+        margin-top: 5px;
+      }
+
+      input[type="text"],
+      input[type="file"] {
+        background-color: #fff; // Ensure background is white for contrast
+        color: #333; // Text color
+        &:focus {
+          outline: 2px solid #007bff; // Highlight on focus to match button color
+        }
       }
     }
+
     button {
       background-color: #007bff;
       color: white;
@@ -39,6 +89,10 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-weight: bold; // Make the text bold
+      width: 50%; // Make button wider for easier clicking
+      transition: background-color 0.3s ease; // Smooth transition for hover effect
+
       &:hover {
         background-color: #0056b3;
       }

@@ -8,7 +8,7 @@
   width: calc(100vw - 230px); // Occupies remaining screen width minus sidebar
   margin-top: 23px;
   height: 100vh;
-  background-color: gray;
+  background-color: white;
 
   @media (max-width: 768px) {
     margin-left: 0; // Full width on small screens
@@ -17,6 +17,9 @@
   }
 }
 
+.links {
+  text-decoration: none;
+}
 .dashboard__row {
   display: flex;
   justify-content: space-between;
