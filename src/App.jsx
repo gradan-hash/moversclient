@@ -21,6 +21,7 @@ import Messagespro from "./components/messages/messagespro";
 import Upload from "./components/Upload/Upload";
 import Sidebar from "./components/ProvidersDashboard/Sidebar";
 import Storageservices from "./components/dashboard/Storageservices";
+import MyTrips from "./components/Trips/Mytrips";
 
 function App() {
   const queryClient = new QueryClient();
@@ -57,6 +58,10 @@ function App() {
         {
           path: "/storage services",
           element: <Storageservices />,
+        },
+        {
+          path: "/mytrips",
+          element: <MyTrips />,
         },
         {
           path: "/singlepage",

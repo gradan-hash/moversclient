@@ -17,7 +17,7 @@ const Sidebarclient = () => {
         <Link className="sidebar__link" to="/mytrips">
           <strong>My Trips</strong>
         </Link>
-        <Link to="/ongoingorders" className="sidebar__link">
+        <Link to="/clientongoingorders" className="sidebar__link">
           <strong>Ongoing Orders</strong>
         </Link>
       </div>
