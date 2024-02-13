@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import moment from "moment";
 import "./message.scss";
-import Sidebar from "../ProvidersDashboard/Sidebar";
+
+import Sidebarclient from "../Sidebar/Sidebarclient";
 
 const Messagespro = () => {
   const [expandedIds, setExpandedIds] = useState([]); // Tracks expanded message IDs
@@ -48,7 +49,7 @@ const Messagespro = () => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebarclient />
       <div className="messages">
         {messages.map((message) => (
           <div
