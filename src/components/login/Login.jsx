@@ -22,6 +22,7 @@ function Login() {
     try {
       const res = await newRequests.post("/login");
       console.log(res);
+      
     } catch (error) {
       console.log(error);
     }

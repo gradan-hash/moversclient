@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import "./register.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import newRequests from "../../API/Newrequest";
+import toast, { Toaster } from "react-hot-toast";
 
 function Register() {
   const [formData, setFormData] = useState({
-    phoneNumber: "",
+    phonenumber: "",
     email: "",
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -21,15 +24,22 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await newRequests.post("/register");
+      const res = await newRequests.post("/register", formData);
       console.log(res);
+      toast.success(res.data);
+
+      if (res.data === "success") {
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error);
+      toast.error("error check your details");
     }
   };
 
   return (
     <div className="register-container">
+      <Toaster />
       <form className="register-form" onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input
@@ -40,11 +50,11 @@ function Register() {
           onChange={handleChange}
           required
         />
-        <label htmlFor="phoneNumber">Phone Number</label>
+        <label htmlFor="phonenumber">Phone Number</label>
         <input
           type="text"
-          name="phoneNumber"
-          id="phoneNumber"
+          name="phonenumber"
+          id="phonenumber"
           value={formData.phoneNumber}
           onChange={handleChange}
           required
