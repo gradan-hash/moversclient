@@ -24,12 +24,12 @@ function Login() {
 
     try {
       const res = await newRequests.post("/login", loginData);
-      console.log(res);
-      if (res.data.statusText === "OK") {
-        toast.success("successs");
+      console.log(res.data);
+      if (res.data.msg === "login success") {
         navigate("/");
-        localStorage.setItem("currentUser", JSON.stringify(res.data.data));
       }
+      toast.success("successs");
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
     } catch (error) {
       console.log(error);
       toast.error(error);
