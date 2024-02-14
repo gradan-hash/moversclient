@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./login.scss";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Providerslogin() {
   const [loginData, setLoginData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -23,12 +23,12 @@ function Login() {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <input
           type="text"
-          name="username"
-          id="username"
-          value={loginData.username}
+          name="email"
+          id="email"
+          value={loginData.email}
           onChange={handleChange}
           required
         />
@@ -56,11 +56,11 @@ function Login() {
           </strong>
         </div>
         <span>
-          <Link to="/login">login as service client</Link>
+          <Link to="/login">login as a client</Link>
         </span>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Providerslogin;

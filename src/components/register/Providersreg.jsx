@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "./register.scss";
 import { Link } from "react-router-dom";
 
-function Providersreg() {
+function ProvidersReg() {
   const [formData, setFormData] = useState({
-    phoneNumber: "",
+    companyname: "",
+    companytype: "", // added companyType
+    phonenumber: "",
     email: "",
-    username: "",
     password: "",
+    location: "", // added location
   });
 
   const handleChange = (e) => {
@@ -25,21 +27,37 @@ function Providersreg() {
   return (
     <div className="register-container">
       <form className="register-form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="companyname">Company Name</label>
         <input
           type="text"
-          name="username"
-          id="username"
-          value={formData.username}
+          name="companyname"
+          id="companyname"
+          value={formData.companyname}
           onChange={handleChange}
           required
         />
-        <label htmlFor="phoneNumber">Phone Number</label>
+
+        <label htmlFor="companytype">Company Type</label>
+        <select
+          name="companytype"
+          id="companytype"
+          value={formData.companytype}
+          onChange={handleChange}
+          required>
+          <option value="">Select Type</option>
+          <option value="Individual">Individual</option>
+          <option value="Partnership">Partnership</option>
+          <option value="Corporation">Corporation</option>
+          <option value="Sole Proprietorship">Sole Proprietorship</option>
+          {/* Add more options as needed */}
+        </select>
+
+        <label htmlFor="phonenumber">Phone Number</label>
         <input
           type="text"
-          name="phoneNumber"
-          id="phoneNumber"
-          value={formData.phoneNumber}
+          name="phonenumber"
+          id="phonenumber"
+          value={formData.phonenumber}
           onChange={handleChange}
           required
         />
@@ -56,7 +74,7 @@ function Providersreg() {
 
         <label htmlFor="password">Password</label>
         <input
-          type="text"
+          type="password" // Changed to password type for security
           name="password"
           id="password"
           value={formData.password}
@@ -64,18 +82,30 @@ function Providersreg() {
           required
         />
 
+        <label htmlFor="location">Location (Main Office)</label>
+        <input
+          type="text"
+          name="location"
+          id="location"
+          value={formData.location}
+          onChange={handleChange}
+          required
+        />
+
         <button type="submit">Register</button>
         <div className="loggedin">
+          Already have an account?{" "}
           <strong>
-            <Link to="/serviceproviderslogin">login</Link>
+            <Link to="/serviceproviderslogin">Login here</Link>
           </strong>
         </div>
         <span>
-          <Link to="/register">register as service client</Link>
+          Looking to register as a client?{" "}
+          <Link to="/register">Register here</Link>
         </span>
       </form>
     </div>
   );
 }
 
-export default Providersreg;
+export default ProvidersReg;

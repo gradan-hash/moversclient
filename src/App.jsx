@@ -23,6 +23,7 @@ import Sidebar from "./components/ProvidersDashboard/Sidebar";
 import Storageservices from "./components/dashboard/Storageservices";
 import MyTrips from "./components/Trips/Mytrips";
 import ClientOrders from "./components/Orders/ClientOrders";
+import Providerslogin from "./components/login/Providerslog";
 
 function App() {
   const queryClient = new QueryClient();
@@ -90,7 +91,7 @@ function App() {
         },
         {
           path: "/serviceproviderslogin",
-          element: <Providersreg />,
+          element: <Providerslogin />,
         },
         {
           path: "/providerdashboard",
