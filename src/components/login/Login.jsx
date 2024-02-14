@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./login.scss";
 import { Link } from "react-router-dom";
+import newRequests from "../../API/Newrequest";
 
 function Login() {
   const [loginData, setLoginData] = useState({
@@ -15,9 +16,15 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(loginData); // Typically, you would handle authentication here
+
+    try {
+      const res = await newRequests.post("/login");
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

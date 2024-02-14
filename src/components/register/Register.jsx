@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./register.scss";
 import { Link } from "react-router-dom";
+import newRequests from "../../API/Newrequest";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -17,9 +18,14 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); // Here, you'd typically send the data to a server
+    try {
+      const res = await newRequests.post("/register");
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -71,7 +77,9 @@ function Register() {
           </strong>
         </div>
         <span>
-          <Link to="/serviceprovidersregister">register as service provider</Link>
+          <Link to="/serviceprovidersregister">
+            register as service provider
+          </Link>
         </span>
       </form>
     </div>
