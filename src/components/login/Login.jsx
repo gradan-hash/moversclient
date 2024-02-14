@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "./login.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import newRequests from "../../API/Newrequest";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const [loginData, setLoginData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setLoginData({
@@ -20,23 +23,29 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await newRequests.post("/login");
+      const res = await newRequests.post("/login", loginData);
       console.log(res);
-      
+      if (res.data.statusText === "OK") {
+        toast.success("successs");
+        navigate("/");
+        localStorage.setItem("currentUser", JSON.stringify(res.data.data));
+      }
     } catch (error) {
       console.log(error);
+      toast.error(error);
     }
   };
 
   return (
     <div className="login-container">
+      <Toaster />
       <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <input
           type="text"
-          name="username"
-          id="username"
-          value={loginData.username}
+          name="email"
+          id="email"
+          value={loginData.email}
           onChange={handleChange}
           required
         />
@@ -52,7 +61,7 @@ function Login() {
         />
 
         <button type="submit">
-          <Link to="/dashboard">Login</Link>
+          <Link to="/">Login</Link>
         </button>
         <div className="loggedin">
           <strong>
