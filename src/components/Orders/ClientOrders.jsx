@@ -1,6 +1,7 @@
 import React from "react";
 import "./currentorders.scss";
 import Sidebar from "../ProvidersDashboard/Sidebar";
+import Sidebarclient from "../Sidebar/Sidebarclient";
 
 const ClientOrders = () => {
   // Updated orders array with additional 'dateDelivered' and 'currentLocation' fields
@@ -54,7 +55,7 @@ const ClientOrders = () => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebarclient />
       <div className="currentOrders">
         <table>
           <thead>

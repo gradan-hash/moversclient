@@ -9,6 +9,8 @@ mapboxgl.accessToken =
 
 const SinglePage = () => {
   const [userLocation, setUserLocation] = useState(null);
+  const [distance, setDistance] = useState(0); // State to store the distance
+  const [time, setTime] = useState(0); // State to store the estimated time
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -24,12 +26,36 @@ const SinglePage = () => {
   const destination = { lat: -1.286389, lng: 36.817223 }; // Example destination
   const watchIdRef = useRef(null);
 
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Earth radius in km
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
+  };
+
+  const estimateTime = (distance, speed = 10) => distance / speed; // Time in hours, assuming speed in km/h
+
   const fetchLocationAndUpdateMap = () => {
     if ("geolocation" in navigator) {
       watchIdRef.current = navigator.geolocation.watchPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           setUserLocation({ lat: latitude, lng: longitude });
+          const dist = calculateDistance(
+            latitude,
+            longitude,
+            destination.lat,
+            destination.lng
+          );
+          setDistance(dist);
+          setTime(estimateTime(dist));
           if (map.current) {
             map.current.flyTo({
               center: [longitude, latitude],
@@ -139,7 +165,6 @@ const SinglePage = () => {
   return (
     <>
       <Sidebarclient />
-
       <div className="single-page">
         <div className="details-left">
           <img
@@ -155,6 +180,10 @@ const SinglePage = () => {
               Vehicle Type: {company.vehicleType}
             </p>
             <p className="company-description">{company.description}</p>
+            <p className="distance">Distance: {distance.toFixed(2)} km</p>
+            <p className="estimated-time">
+              Estimated Time: {time.toFixed(2)} hours
+            </p>
           </div>
         </div>
         <div className="map-bottom" ref={mapContainer}></div>
