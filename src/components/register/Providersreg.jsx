@@ -29,11 +29,11 @@ function ProvidersReg() {
     try {
       const res = await Requests.post("/register", formData);
       console.log(res.data);
-      toast.success(res.data);
 
       if (res.data === "success") {
         navigate("/serviceproviderslogin");
       }
+      toast.success("success");
     } catch (error) {
       console.log(error);
       toast.error("error check your details");

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./login.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Requests from "../../API/Providerequest";
+import toast, { Toaster } from "react-hot-toast";
 
 function Providerslogin() {
   const [loginData, setLoginData] = useState({
@@ -15,13 +17,28 @@ function Providerslogin() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(loginData); 
+
+    try {
+      const res = await Requests.post("/login", loginData);
+      console.log(res.data);
+      if (res.data.msg === "login success") {
+        navigate("/providerdashboard");
+      }
+      toast.success("successs");
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    }
   };
 
   return (
     <div className="login-container">
+      <Toaster />
       <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
