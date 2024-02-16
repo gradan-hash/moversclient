@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./upload.scss";
 import Sidebar from "../ProvidersDashboard/Sidebar";
-
+import imagess from "../../assets/storage.jpeg";
 const Upload = () => {
   const [serviceType, setServiceType] = useState("");
   const [quotation, setQuotation] = useState("");
   const [operationLocation, setOperationLocation] = useState("");
+  const [description, setdescription] = useState("");
   const [files, setFiles] = useState([]);
 
   const handleFileChange = (event) => {
@@ -26,7 +27,7 @@ const Upload = () => {
       <div className="upload-container">
         <div className="upload-top">
           {/* Placeholder for user image */}
-          <img src="path/to/user-image.jpg" alt="User" className="user-image" />
+          <img src={imagess} alt="User" className="user-image" />
         </div>
         <div className="upload-center">
           <form onSubmit={handleSubmit}>
@@ -75,6 +76,14 @@ const Upload = () => {
             <div className="form-group">
               <label>Upload Images:</label>
               <input type="file" multiple onChange={handleFileChange} />
+            </div>
+            <div className="form-group">
+              <label>Description</label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setdescription(e.target.value)}
+              />
             </div>
             <button type="submit">Submit</button>
           </form>
