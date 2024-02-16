@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./register.scss";
-import { Link } from "react-router-dom";
-import newRequests from "../../API/Newrequest";
+import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+
+import Requests from "../../API/Providerequest";
 
 function ProvidersReg() {
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ function ProvidersReg() {
     location: "", // added location
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,12 +27,12 @@ function ProvidersReg() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await newRequests.post("/register", formData);
-      console.log(res);
+      const res = await Requests.post("/register", formData);
+      console.log(res.data);
       toast.success(res.data);
 
       if (res.data === "success") {
-        navigate("/login");
+        navigate("/serviceproviderslogin");
       }
     } catch (error) {
       console.log(error);
@@ -38,6 +42,7 @@ function ProvidersReg() {
 
   return (
     <div className="register-container">
+      <Toaster />
       <form className="register-form" onSubmit={handleSubmit}>
         <label htmlFor="companyname">Company Name</label>
         <input
