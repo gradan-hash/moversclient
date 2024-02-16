@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./register.scss";
 import { Link } from "react-router-dom";
+import newRequests from "../../API/Newrequest";
 
 function ProvidersReg() {
   const [formData, setFormData] = useState({
@@ -19,9 +20,20 @@ function ProvidersReg() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); // Here, you'd typically send the data to a server
+    try {
+      const res = await newRequests.post("/register", formData);
+      console.log(res);
+      toast.success(res.data);
+
+      if (res.data === "success") {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("error check your details");
+    }
   };
 
   return (

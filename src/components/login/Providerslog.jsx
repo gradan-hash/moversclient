@@ -17,7 +17,7 @@ function Providerslogin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(loginData); // Typically, you would handle authentication here
+    console.log(loginData); 
   };
 
   return (
