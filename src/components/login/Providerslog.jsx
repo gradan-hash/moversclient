@@ -25,10 +25,10 @@ function Providerslogin() {
     try {
       const res = await Requests.post("/login", loginData);
       console.log(res.data);
-      if (res.data.msg === "login success") {
+      if (res.data.msg == "login success") {
         navigate("/providerdashboard");
+        toast.success("successs");
       }
-      toast.success("successs");
       localStorage.setItem("currentUser", JSON.stringify(res.data));
     } catch (error) {
       console.log(error);

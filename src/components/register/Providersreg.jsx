@@ -30,7 +30,7 @@ function ProvidersReg() {
       const res = await Requests.post("/register", formData);
       console.log(res.data);
 
-      if (res.data === "success") {
+      if (res.data == "success") {
         navigate("/serviceproviderslogin");
       }
       toast.success("success");

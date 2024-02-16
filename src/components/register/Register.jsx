@@ -28,7 +28,7 @@ function Register() {
       console.log(res);
       toast.success(res.data);
 
-      if (res.data === "success") {
+      if (res.data == "success") {
         navigate("/login");
       }
     } catch (error) {

@@ -6,14 +6,8 @@ import newRequests from "../../API/Newrequest";
 
 const Navbar = () => {
   const messageCount = 0; // Assuming this could be dynamic
-  let currentUser;
-  try {
-    const storedUser = localStorage.getItem("currentUser");
-    currentUser = storedUser ? JSON.parse(storedUser) : null;
-  } catch (err) {
-    console.error("Error parsing currentUser from localStorage:", err);
-    currentUser = null;
-  }
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
