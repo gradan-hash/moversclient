@@ -3,6 +3,9 @@ import "./upload.scss";
 import Sidebar from "../ProvidersDashboard/Sidebar";
 import imagess from "../../assets/storage.jpeg";
 import axios from "axios"; // Make sure to install axios with npm or yarn
+import newRequests from "../../API/Newrequest";
+import { toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const Upload = () => {
   const [serviceType, setServiceType] = useState("");
@@ -27,10 +30,11 @@ const Upload = () => {
           { method: "POST", body: formData }
         );
         const data = await response.json();
+        console.log(data.url);
         setImageURL(data.url); // Store the URL of uploaded image
       } catch (error) {
         console.error("Error uploading image:", error);
-        alert("Error uploading image. Please try again later.");
+        toast.error("Error uploading image. Please try again later.");
       } finally {
         setIsImageLoading(false);
       }
@@ -40,7 +44,7 @@ const Upload = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!imageURL) {
-      alert("Please upload an image.");
+      toast.error("Please upload an image.");
       return;
     }
 
@@ -53,10 +57,9 @@ const Upload = () => {
     };
 
     try {
-      // Replace `yourBackendEndpoint` with the actual endpoint where you handle the form submission
-      const response = await axios.post("yourBackendEndpoint", formData);
+      const response = await newRequests.post("/postproducts", formData);
       console.log(response.data);
-      alert("Data submitted successfully!");
+      toast.success("Data submitted successfully!");
 
       // Reset form (optional)
       setServiceType("");
@@ -73,6 +76,7 @@ const Upload = () => {
   return (
     <>
       <Sidebar />
+      <Toaster />
 
       <div className="upload-container">
         <div className="upload-top">
