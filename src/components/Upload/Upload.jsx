@@ -4,7 +4,6 @@ import Sidebar from "../ProvidersDashboard/Sidebar";
 import imagess from "../../assets/storage.jpeg";
 import axios from "axios"; // Make sure to install axios with npm or yarn
 import newRequests from "../../API/Newrequest";
-import { toast } from "react-hot-toast";
 import toast, { Toaster } from "react-hot-toast";
 
 const Upload = () => {
@@ -69,7 +68,7 @@ const Upload = () => {
       setImageURL("");
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Failed to submit. Please try again.");
+      toast.error("Failed to submit. Please try again.");
     }
   };
 
