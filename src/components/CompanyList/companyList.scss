@@ -8,9 +8,8 @@
   padding: 20px;
   justify-content: center; // Centers items in the grid
 
-
   @media (min-width: 768px) {
-    // Ensures 4 items per row on medium screens
+    // Adjusts to 4 items per row on medium screens
     grid-template-columns: repeat(4, 1fr);
   }
 

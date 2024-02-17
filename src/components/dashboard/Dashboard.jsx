@@ -24,7 +24,7 @@ const Dashboard = () => {
       <div className="dashboard">
         <br></br>
         
-        <SearchBar onSearch={handleSearch} />
+        {/* <SearchBar onSearch={handleSearch} /> */}
 
         <CompanyList filter={filter} />
         
