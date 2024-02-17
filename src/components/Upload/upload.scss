@@ -3,9 +3,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center; // Ensure content is centered both vertically and horizontally
-  padding: 20px;
-  margin-top: 40px;
-  width: 50vw; // Adjust the width for better centering and appearance
+  padding: 13px;
+  margin-top: 45px;
+  width: 70vw; // Adjust the width for better centering and appearance
   max-width: 600px; // Ensure it doesn't get too wide on larger screens
   min-height: 80vh;
   margin-left: auto; // Center the container
@@ -15,12 +15,13 @@
   border-radius: 8px; // Rounded corners for a softer look
    // Use a darker color for text for better readability
   overflow-y: auto;
+  overflow: auto;
 
   .user-image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 3px solid #007bff; // Add a border color similar to the button for consistency
   }
 
@@ -55,6 +56,7 @@
       .radio-options {
         display: flex;
         justify-content: space-around; // Spread the radio buttons evenly
+        color: black;
         input {
           margin-right: 5px;
           cursor: pointer; // Indicate it's clickable
