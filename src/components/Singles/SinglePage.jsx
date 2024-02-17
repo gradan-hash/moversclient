@@ -25,7 +25,7 @@ const SinglePage = () => {
       setLoading(true);
       try {
         const res = await Requests.get(`/singleproduct/${id}`);
-        console.log(res);
+        // console.log(res.data);
         setCompany(res.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -177,30 +177,41 @@ const SinglePage = () => {
   return (
     <>
       <Sidebarclient />
-      <div className="single-page">
-        <div className="details-left">
-          <img
-            src={company.imageUrl}
-            alt={company.name}
-            className="company-image"
-          />
-          <div className="company-details">
-            <h2 className="company-name">{company.name}</h2>
-            <p className="company-location">Location: {company.location}</p>
-            <p className="company-quote">Quote: {company.quote}</p>
-            <p className="company-vehicle-type">
-              Vehicle Type: {company.vehicleType}
-            </p>
-            <p className="company-description">{company.description}</p>
-            <p className="distance">Distance: {distance.toFixed(2)} km</p>
-            <p className="estimated-time">
-              Estimated Time: {time.toFixed(2)} hours
-            </p>
+      {loading ? (
+        <span>Loading...</span>
+      ) : (
+        <div className="single-page">
+          <div className="details-left">
+            <img
+              src={company.imageURL}
+              alt={company.name}
+              className="company-image"
+            />
+            <div className="company-details">
+              <h2 className="company-name">{company.name}</h2>
+              <p className="company-location">
+                Location: {company.operationLocation}
+              </p>
+              <p className="company-quote">Quote: {company.quotation}</p>
+              <p className="company-vehicle-type">
+                Vehicle Type: {company.cartype}
+              </p>
+              <p className="company-description">
+                description:{company.description}
+              </p>
+              <p className="company-description">
+                serviceType:{company.serviceType}
+              </p>
+              <p className="distance">Distance: {distance.toFixed(2)} km</p>
+              <p className="estimated-time">
+                Estimated Time: {time.toFixed(2)} hours
+              </p>
+            </div>
           </div>
+          <div className="map-bottom" ref={mapContainer}></div>
+          <button onClick={fetchLocationAndUpdateMap}>Connect</button>
         </div>
-        <div className="map-bottom" ref={mapContainer}></div>
-        <button onClick={fetchLocationAndUpdateMap}>Connect</button>
-      </div>
+      )}
     </>
   );
 };
