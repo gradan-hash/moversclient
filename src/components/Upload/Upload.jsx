@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./upload.scss";
 import Sidebar from "../ProvidersDashboard/Sidebar";
 import imagess from "../../assets/storage.jpeg";
-import axios from "axios"; // Make sure to install axios with npm or yarn
-import newRequests from "../../API/Newrequest";
+
 import toast, { Toaster } from "react-hot-toast";
 import Requests from "../../API/Providerequest";
 
@@ -12,8 +11,9 @@ const Upload = () => {
   const [quotation, setQuotation] = useState("");
   const [operationLocation, setOperationLocation] = useState("");
   const [description, setDescription] = useState("");
-  const [images, setimages] = useState(""); // State to store uploaded image URL
+  const [imageURL, setImageURL] = useState(""); // State to store uploaded image URL
   const [isImageLoading, setIsImageLoading] = useState(false); // State to indicate image is being uploaded
+  const [cartype, setcartype] = useState("");
 
   const handleFileChange = async (event) => {
     setIsImageLoading(true);
@@ -31,7 +31,7 @@ const Upload = () => {
         );
         const data = await response.json();
         console.log(data.url);
-        setimages(data.url); // Store the URL of uploaded image
+        setImageURL(data.url); // Store the URL of uploaded image
       } catch (error) {
         console.error("Error uploading image:", error);
         toast.error("Error uploading image. Please try again later.");
@@ -43,7 +43,7 @@ const Upload = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!images) {
+    if (!imageURL) {
       toast.error("Please upload an image.");
       return;
     }
@@ -52,11 +52,10 @@ const Upload = () => {
       serviceType,
       quotation,
       operationLocation,
+      cartype,
       description,
-      images, // Include the images in the data you're sending
+      imageURL, // Include the imageURL in the data you're sending
     };
-
-    console.log(formData);
 
     try {
       const response = await Requests.post("/postproducts", formData);
@@ -68,7 +67,8 @@ const Upload = () => {
       setQuotation("");
       setOperationLocation("");
       setDescription("");
-      setimages("");
+      setImageURL("");
+      setcartype("");
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Failed to submit. Please try again.");
@@ -132,6 +132,14 @@ const Upload = () => {
                 type="text"
                 value={operationLocation}
                 onChange={(e) => setOperationLocation(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label>cartype</label>
+              <input
+                type="text"
+                value={cartype}
+                onChange={(e) => setcartype(e.target.value)}
               />
             </div>
 
