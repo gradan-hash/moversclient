@@ -3,16 +3,19 @@
   flex-direction: row;
   justify-content: space-between;
   height: 100vh; // Adjust the height as needed
-
+  gap: 40px;
   .left {
     flex: 1;
     padding: 20px;
     // overflow-y: auto;
     margin-left: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: auto;
 
     img.image {
       margin-top: 50px;
-      width: 100%; 
+      width: 100%;
       height: auto;
       margin-bottom: 20px;
     }
@@ -24,16 +27,13 @@
         font-weight: bold;
       }
 
-      
-
       button {
-        
       }
     }
   }
 
   .right {
-    flex:2;
+    flex: 2;
     margin-top: 70px;
   }
 }
@@ -42,4 +42,11 @@
 .right {
   width: 30vw;
   height: 50vh; // Adjust based on your layout needs
+
+  .maps {
+    height: 400px; // Set a fixed height for the map container
+    width: 80%; // Adjust width as per your design requirement
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 }

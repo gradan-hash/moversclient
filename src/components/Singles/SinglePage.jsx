@@ -214,7 +214,7 @@ const SinglePage = () => {
           <div className="right">
           <br></br>
           <br></br>
-            {isMapVisible && <span  ref={mapContainer}></span>}
+            {isMapVisible && <span className="maps" ref={mapContainer}></span>}
           </div>
         </div>
       )}
