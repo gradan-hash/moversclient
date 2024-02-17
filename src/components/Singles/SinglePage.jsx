@@ -3,6 +3,8 @@ import mapboxgl from "mapbox-gl";
 import "./SinglePage.scss";
 import movers from "../../assets/movers.jpeg";
 import Sidebarclient from "../Sidebar/Sidebarclient";
+import { useParams } from "react-router-dom";
+import Requests from "../../API/Providerequest";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZ3JhZGFuIiwiYSI6ImNsc2QwOGhybDB3dnQyaW9hZ3l3cXJxbncifQ.2mVTkWGbItvkXiXgd_-vMw";
@@ -13,15 +15,25 @@ const SinglePage = () => {
   const [time, setTime] = useState(0); // State to store the estimated time
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const [loading, setLoading] = useState("");
+  const [company, setCompany] = useState("");
 
-  const company = {
-    name: "Cheap Movers Co.",
-    quote: "$200",
-    location: "New York",
-    vehicleType: "Truck",
-    imageUrl: movers,
-    description: "Description about the company...",
-  };
+  const { id } = useParams();
+
+  useEffect(() => {
+    const Getsinglepage = async () => {
+      setLoading(true);
+      try {
+        const res = await Requests.get(`/singleproduct/${id}`);
+        console.log(res);
+        setCompany(res.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+      setLoading(false);
+    };
+    Getsinglepage();
+  }, []);
 
   const destination = { lat: -1.286389, lng: 36.817223 }; // Example destination
   const watchIdRef = useRef(null);
