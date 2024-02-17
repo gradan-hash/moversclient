@@ -10,7 +10,7 @@
   background-color: #f4f4f4;
   padding: 20px;
   box-sizing: border-box;
-
+  overflow: auto;
   @media (max-width: 768px) {
     width: 100%; // Full width on small screens
   }

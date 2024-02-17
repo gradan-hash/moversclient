@@ -17,6 +17,7 @@ const SinglePage = () => {
   const map = useRef(null);
   const [loading, setLoading] = useState("");
   const [company, setCompany] = useState("");
+  const [isMapVisible, setIsMapVisible] = useState(false);
 
   const { id } = useParams();
 
@@ -55,6 +56,8 @@ const SinglePage = () => {
   const estimateTime = (distance, speed = 10) => distance / speed; // Time in hours, assuming speed in km/h
 
   const fetchLocationAndUpdateMap = () => {
+    setIsMapVisible(true);
+
     if ("geolocation" in navigator) {
       watchIdRef.current = navigator.geolocation.watchPosition(
         (position) => {
@@ -148,7 +151,7 @@ const SinglePage = () => {
   }, []);
 
   useEffect(() => {
-    if (userLocation && !map.current && mapContainer.current) {
+    if (isMapVisible && !map.current && mapContainer.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/streets-v11",
@@ -168,7 +171,7 @@ const SinglePage = () => {
           .addTo(map.current);
       });
     }
-  }, [userLocation]);
+  }, [isMapVisible, userLocation]);
 
   useEffect(() => {
     fetchLocationAndUpdateMap();
@@ -180,36 +183,39 @@ const SinglePage = () => {
       {loading ? (
         <span>Loading...</span>
       ) : (
-        <div className="single-page">
-          <div className="details-left">
-            <img
-              src={company.imageURL}
-              alt={company.name}
-              className="company-image"
-            />
-            <div className="company-details">
-              <h2 className="company-name">{company.name}</h2>
-              <p className="company-location">
+        <div className="singlepage">
+          <div className="left">
+            <img src={company.imageURL} alt={company.name} className="image" />
+            <div className="details">
+              <p className="companydetails">{company.name}</p>
+              <p className="companydetails">
                 Location: {company.operationLocation}
               </p>
-              <p className="company-quote">Quote: {company.quotation}</p>
-              <p className="company-vehicle-type">
-                Vehicle Type: {company.cartype}
+              <p className="companydetails">Quote: {company.quotation}</p>
+              <p className="companydetails">Vehicle Type: {company.cartype}</p>
+              <p className="companydetails">
+                Description:{company.description}
               </p>
-              <p className="company-description">
-                description:{company.description}
+              <p className="companydetails">
+                ServiceType:{company.serviceType}
               </p>
-              <p className="company-description">
-                serviceType:{company.serviceType}
-              </p>
-              <p className="distance">Distance: {distance.toFixed(2)} km</p>
-              <p className="estimated-time">
-                Estimated Time: {time.toFixed(2)} hours
-              </p>
+              <div className="companydetails">
+                <p className="companydetails">
+                  Distance: {distance.toFixed(2)} km
+                </p>
+                <p className="companydetails">
+                  Estimated Time: {time.toFixed(2)} hours
+                </p>
+              </div>
+
+              <button>Message</button>
             </div>
           </div>
-          <div className="map-bottom" ref={mapContainer}></div>
-          <button onClick={fetchLocationAndUpdateMap}>Connect</button>
+          <div className="right">
+          <br></br>
+          <br></br>
+            {isMapVisible && <span  ref={mapContainer}></span>}
+          </div>
         </div>
       )}
     </>
