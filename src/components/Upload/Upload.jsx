@@ -5,13 +5,14 @@ import imagess from "../../assets/storage.jpeg";
 import axios from "axios"; // Make sure to install axios with npm or yarn
 import newRequests from "../../API/Newrequest";
 import toast, { Toaster } from "react-hot-toast";
+import Requests from "../../API/Providerequest";
 
 const Upload = () => {
   const [serviceType, setServiceType] = useState("");
   const [quotation, setQuotation] = useState("");
   const [operationLocation, setOperationLocation] = useState("");
   const [description, setDescription] = useState("");
-  const [imageURL, setImageURL] = useState(""); // State to store uploaded image URL
+  const [images, setimages] = useState(""); // State to store uploaded image URL
   const [isImageLoading, setIsImageLoading] = useState(false); // State to indicate image is being uploaded
 
   const handleFileChange = async (event) => {
@@ -30,7 +31,7 @@ const Upload = () => {
         );
         const data = await response.json();
         console.log(data.url);
-        setImageURL(data.url); // Store the URL of uploaded image
+        setimages(data.url); // Store the URL of uploaded image
       } catch (error) {
         console.error("Error uploading image:", error);
         toast.error("Error uploading image. Please try again later.");
@@ -42,7 +43,7 @@ const Upload = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!imageURL) {
+    if (!images) {
       toast.error("Please upload an image.");
       return;
     }
@@ -52,11 +53,13 @@ const Upload = () => {
       quotation,
       operationLocation,
       description,
-      imageURL, // Include the imageURL in the data you're sending
+      images, // Include the images in the data you're sending
     };
 
+    console.log(formData);
+
     try {
-      const response = await newRequests.post("/postproducts", formData);
+      const response = await Requests.post("/postproducts", formData);
       console.log(response.data);
       toast.success("Data submitted successfully!");
 
@@ -65,7 +68,7 @@ const Upload = () => {
       setQuotation("");
       setOperationLocation("");
       setDescription("");
-      setImageURL("");
+      setimages("");
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Failed to submit. Please try again.");
