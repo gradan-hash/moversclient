@@ -70,7 +70,7 @@ function App() {
           element: <ClientOrders />,
         },
         {
-          path: "/singlepage",
+          path: "/singlepage/:id",
           element: <SinglePage />,
         },
         {

@@ -48,7 +48,10 @@ const StorageList = () => {
                 alt={company.serviceType}
                 className="company-image"
               />
-              <Link to="/singlepage" style={{ textDecoration: "none" }}>
+              {/* {`/ongoingcrimes/${item.report_id}`} */}
+              <Link
+                to={`/singlepage/${company._id}`}
+                style={{ textDecoration: "none" }}>
                 <div className="company-info">
                   <h3>ServiceType: {company.serviceType}</h3>
                   <p>Quote: {company.quotation}</p>
