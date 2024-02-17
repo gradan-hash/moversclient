@@ -7,15 +7,7 @@ import StorageList from "../CompanyList/StorageList";
 import Sidebarclient from "../Sidebar/Sidebarclient";
 
 const Dashboard = () => {
-  const [filter, setFilter] = useState({
-    company: "",
-    quote: "",
-    location: "",
-  });
-
-  const handleSearch = (searchFilter) => {
-    setFilter(searchFilter);
-  };
+ 
 
   return (
     <>
@@ -26,7 +18,7 @@ const Dashboard = () => {
         
         {/* <SearchBar onSearch={handleSearch} /> */}
 
-        <CompanyList filter={filter} />
+        <CompanyList  />
         
       </div>
     </>

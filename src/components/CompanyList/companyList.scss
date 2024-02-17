@@ -1,10 +1,11 @@
 .company-list {
   display: grid;
+  overflow: auto;
   grid-template-columns: repeat(
     auto-fit,
     minmax(180px, 1fr)
   ); // Adjusts for responsiveness
-  gap: 20px; // Space between cards
+  gap: 10px; // Space between cards
   padding: 20px;
   justify-content: center; // Centers items in the grid
 
@@ -15,7 +16,7 @@
 
   @media (min-width: 1024px) {
     // Adjusts to 5 items per row on larger screens
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -31,21 +32,49 @@
 
   .company-image {
     width: 100%;
-    height: 150px; // Ensures image height consistency
+    height: 100px;
     object-fit: cover;
   }
 
   .company-info {
-    padding: 15px;
-    text-align: center; // Centers the text for consistency
-
-    h3,
-    p {
-      margin: 5px 0; // Reduces spacing for a tighter layout
-    }
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
   }
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; // Adds some space between the list and the pagination
+
+  button {
+    background-color: #007bff; // Bootstrap primary blue
+    border: 1px solid #007bff;
+    color: white;
+    padding: 8px 16px;
+    margin: 0 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3; // Darker shade of blue for hover
+      border-color: #0056b3;
+    }
+
+    &:focus {
+      outline: none; // Removes the default focus outline
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); // Adds a custom focus box-shadow
+    }
+  }
+
+  .active {
+    background-color: #0056b3; // Active page button has a different color
+    border-color: #0056b3;
   }
 }

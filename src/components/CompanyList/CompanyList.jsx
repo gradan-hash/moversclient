@@ -3,7 +3,7 @@ import "./companyList.scss";
 import { Link } from "react-router-dom";
 import Requests from "../../API/Providerequest";
 
-const CompanyList = ({ filter }) => {
+const CompanyList = () => {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
