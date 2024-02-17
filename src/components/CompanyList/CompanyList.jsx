@@ -14,7 +14,11 @@ const CompanyList = () => {
       setLoading(true);
       try {
         const response = await Requests.get("/getproducts");
-        setCompanies(response.data);
+        // Filter for 'moving' serviceType right after fetching
+        const movingCompanies = response.data.filter(
+          (company) => company.serviceType.toLowerCase() === "moving"
+        );
+        setCompanies(movingCompanies);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -27,6 +31,7 @@ const CompanyList = () => {
   // Calculate the current items to display
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // Continue using currentItems for pagination
   const currentItems = companies.slice(indexOfFirstItem, indexOfLastItem);
 
   // Change page
