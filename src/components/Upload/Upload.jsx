@@ -81,10 +81,7 @@ const Upload = () => {
       <Toaster />
 
       <div className="upload-container">
-        <div className="upload-top">
-          {/* Placeholder for user image */}
-          <img src={imagess} alt="User" className="user-image" />
-        </div>
+        
         <div className="upload-center">
           <form onSubmit={handleSubmit}>
             <div className="form-group">

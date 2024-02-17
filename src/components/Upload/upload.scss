@@ -13,7 +13,7 @@
   background-color: #f9f9f9; // A light background color that contrasts well with white
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Add a subtle shadow for depth
   border-radius: 8px; // Rounded corners for a softer look
-   // Use a darker color for text for better readability
+  // Use a darker color for text for better readability
   overflow-y: auto;
   overflow: auto;
 
@@ -39,12 +39,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    overflow-y: auto;
+    overflow: auto;
     width: 90%; // Make it slightly less wide than the container for padding effect
 
     .form-group {
       width: 100%; // Full width to align with the design
-      margin-bottom: 20px;
+      margin-bottom: 10px;
 
       label {
         display: block;
