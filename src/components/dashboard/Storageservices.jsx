@@ -14,10 +14,8 @@ const Storageservices = () => {
       <Sidebarclient />
 
       <div className="dashboard">
-        <br></br>
-
-       
-
+    
+    
         <StorageList />
       </div>
     </>
