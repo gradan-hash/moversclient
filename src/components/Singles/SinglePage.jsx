@@ -15,9 +15,11 @@ const SinglePage = () => {
   const [time, setTime] = useState(0); // State to store the estimated time
   const mapContainer = useRef(null);
   const map = useRef(null);
+
   const [loading, setLoading] = useState("");
   const [company, setCompany] = useState("");
   const [isMapVisible, setIsMapVisible] = useState(false);
+  const [providerdetails, setProviderdetails] = useState(false);
 
   const { id } = useParams();
 
@@ -26,8 +28,9 @@ const SinglePage = () => {
       setLoading(true);
       try {
         const res = await Requests.get(`/singleproduct/${id}`);
-        // console.log(res.data);
-        setCompany(res.data);
+        console.log(res.data);
+        setCompany(res.data.items);
+        setProviderdetails(res.data.providerdetails);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -185,9 +188,13 @@ const SinglePage = () => {
       ) : (
         <div className="singlepage">
           <div className="left">
-            <img src={company.imageURL} alt={company.name} className="image" />
+            <img
+              src={company.imageURL}
+              alt={providerdetails.companyname}
+              className="image"
+            />
             <div className="details">
-              <p className="companydetails">{company.name}</p>
+              <p className="companydetails">{providerdetails.companyname}</p>
               <p className="companydetails">
                 Location: {company.operationLocation}
               </p>

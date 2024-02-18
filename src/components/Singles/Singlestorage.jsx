@@ -26,7 +26,7 @@ const SinglePage = () => {
       setLoading(true);
       try {
         const res = await Requests.get(`/singleproduct/${id}`);
-        // console.log(res.data);
+        console.log(res.data);
         setCompany(res.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
