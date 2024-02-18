@@ -208,10 +208,10 @@ const SinglePage = () => {
               </p>
               <div className="companydetails">
                 <p className="companydetails">
-                  Distance: {distance.toFixed(2)} km
+                  PhonenNumer: {providerdetails.phonenumber}
                 </p>
                 <p className="companydetails">
-                  Estimated Time: {time.toFixed(2)} hours
+                  Estimated Time: {time.toFixed(2)} hours{distance.toFixed(2)}km
                 </p>
               </div>
 
