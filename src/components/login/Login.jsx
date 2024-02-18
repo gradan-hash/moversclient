@@ -27,8 +27,8 @@ function Login() {
       console.log(res.data);
       if (res.data.msg == "login success") {
         navigate("/");
+        toast.success("successs");
       }
-      toast.success("successs");
       localStorage.setItem("currentUser", JSON.stringify(res.data));
     } catch (error) {
       console.log(error);
