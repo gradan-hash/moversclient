@@ -18,6 +18,7 @@ const SinglePage = () => {
   const [loading, setLoading] = useState("");
   const [company, setCompany] = useState("");
   const [isMapVisible, setIsMapVisible] = useState(false);
+  const [providerdetails, setProviderdetails] = useState("");
 
   const { id } = useParams();
 
@@ -27,7 +28,8 @@ const SinglePage = () => {
       try {
         const res = await Requests.get(`/singleproduct/${id}`);
         console.log(res.data);
-        setCompany(res.data);
+        setCompany(res.data.items);
+        setProviderdetails(res.data.providerdetails);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -185,9 +187,13 @@ const SinglePage = () => {
       ) : (
         <div className="singlepage">
           <div className="left">
-            <img src={company.imageURL} alt={company.name} className="image" />
+            <img
+              src={company.imageURL}
+              alt={providerdetails.companyname}
+              className="image"
+            />
             <div className="details">
-              <p className="companydetails">{company.name}</p>
+              <p className="companydetails">{providerdetails.companyname}</p>
               <p className="companydetails">
                 Location: {company.operationLocation}
               </p>

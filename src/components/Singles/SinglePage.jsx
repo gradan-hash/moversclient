@@ -19,7 +19,7 @@ const SinglePage = () => {
   const [loading, setLoading] = useState("");
   const [company, setCompany] = useState("");
   const [isMapVisible, setIsMapVisible] = useState(false);
-  const [providerdetails, setProviderdetails] = useState(false);
+  const [providerdetails, setProviderdetails] = useState("");
 
   const { id } = useParams();
 
