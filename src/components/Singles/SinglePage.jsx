@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import "./SinglePage.scss";
 import movers from "../../assets/movers.jpeg";
 import Sidebarclient from "../Sidebar/Sidebarclient";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Requests from "../../API/Providerequest";
 
 mapboxgl.accessToken =
@@ -208,12 +208,14 @@ const SinglePage = () => {
                 </p>
               </div>
 
-              <button>Message</button>
+              <Link to="/messages" style={{ textDecoration: "none" }}>
+                <button>Message</button>
+              </Link>
             </div>
           </div>
           <div className="right">
-          <br></br>
-          <br></br>
+            <br></br>
+            <br></br>
             {isMapVisible && <span className="maps" ref={mapContainer}></span>}
           </div>
         </div>

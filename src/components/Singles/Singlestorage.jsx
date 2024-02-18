@@ -207,8 +207,9 @@ const SinglePage = () => {
                   Estimated Time: {time.toFixed(2)} hours
                 </p>
               </div>
-
-              <button>Message</button>
+              <Link to="/messages" style={{ textDecoration: "none" }}>
+                <button>Message</button>
+              </Link>
             </div>
           </div>
           <div className="right">
