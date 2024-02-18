@@ -15,6 +15,10 @@ const Upload = () => {
   const [isImageLoading, setIsImageLoading] = useState(false); // State to indicate image is being uploaded
   const [cartype, setcartype] = useState("");
 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const ProviderId = currentUser._id;
+  // console.log("currentuser", ProviderId);
+
   const handleFileChange = async (event) => {
     setIsImageLoading(true);
     const file = event.target.files[0]; // Assuming single file upload
@@ -54,6 +58,7 @@ const Upload = () => {
       operationLocation,
       cartype,
       description,
+      ProviderId,
       imageURL, // Include the imageURL in the data you're sending
     };
 
@@ -81,7 +86,6 @@ const Upload = () => {
       <Toaster />
 
       <div className="upload-container">
-        
         <div className="upload-center">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
