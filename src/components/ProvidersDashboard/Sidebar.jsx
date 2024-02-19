@@ -22,7 +22,7 @@ const Sidebar = () => {
         </Link>
       </div>
       <div className="sidebar__section sidebar__bottom">
-        <Link className="sidebar__link" to="/messagesprovider">
+        <Link className="sidebar__link" to="/messagesproviders">
           <strong>Messages</strong>
         </Link>
       </div>

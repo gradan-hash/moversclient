@@ -27,7 +27,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="dashboard__rectangle">
-            <Link className="links" to="/messagesprovider">
+            <Link className="links" to="/messagesproviders">
               <strong>Messages</strong>
             </Link>
           </div>

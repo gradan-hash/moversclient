@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ProviderMessage.scss";
 import newRequests from "../../API/Newrequest";
+import Sidebar from "./Sidebar";
 
 const ProviderMessage = () => {
   const [messages, setMessages] = useState([]);
@@ -15,7 +16,7 @@ const ProviderMessage = () => {
           `/providermesages/${currentUser._id}`
         );
         console.log(response.data);
-        setMessages(data.messages);
+        setMessages(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -25,14 +26,18 @@ const ProviderMessage = () => {
   }, []);
 
   return (
-    <div>
-      {messages.map((message, index) => (
-        <div key={index} className="message">
-          <p>{message.text}</p>
-          <p>From: {message.sender}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <Sidebar />
+
+      <div>
+        {messages.map((message) => (
+          <div key={message._id} className="message">
+            <p>{message.message}</p>
+            <p>From: {message.sender}</p>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
