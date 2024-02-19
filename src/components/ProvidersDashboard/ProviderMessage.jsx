@@ -10,24 +10,31 @@ const ProviderMessage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await newRequests(
+        const response = await newRequests.get(
           `/providermessages/${currentUser._id}`
         );
         console.log(response.data);
 
-        // Assuming you want to filter by the uniqueId of the first message
-        // Check if there are any messages and get the uniqueId of the first message
-        const firstMessageUniqueId =
-          response.data.length > 0 ? response.data[0].uniqueid : null;
+        // Initialize an object to hold the latest message for each uniqueid
+        const latestMessagesMap = {};
 
-        // Filter messages to only include those with the same uniqueId as the first message
-        const filteredMessages = firstMessageUniqueId
-          ? response.data.filter(
-              (message) => message.uniqueid === firstMessageUniqueId
-            )
-          : [];
+        // Iterate over each message to populate the map
+        response.data.forEach((message) => {
+          const uniqueId = message.uniqueid;
+          // If this uniqueid is not yet in the map or if this message is newer, update the map
+          if (
+            !latestMessagesMap[uniqueId] ||
+            new Date(message.createdAt) >
+              new Date(latestMessagesMap[uniqueId].createdAt)
+          ) {
+            latestMessagesMap[uniqueId] = message;
+          }
+        });
 
-        setMessages(filteredMessages);
+        // Convert the map to an array of messages
+        const latestMessages = Object.values(latestMessagesMap);
+
+        setMessages(latestMessages);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -44,7 +51,10 @@ const ProviderMessage = () => {
         {messages.map((message) => (
           <div key={message._id} className="message">
             <p>{message.message}</p>
-            <p>From: {message.sender}</p>
+            <p>
+              From: {message.sender} -{" "}
+              {new Date(message.createdAt).toLocaleString()}
+            </p>
           </div>
         ))}
       </div>
