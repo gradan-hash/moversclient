@@ -24,6 +24,7 @@ import Storageservices from "./components/dashboard/Storageservices";
 import MyTrips from "./components/Trips/Mytrips";
 import ClientOrders from "./components/Orders/ClientOrders";
 import Providerslogin from "./components/login/Providerslog";
+import ProviderMessage from "./components/ProvidersDashboard/Providermessage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -76,6 +77,10 @@ function App() {
         {
           path: "/messages/:id",
           element: <Messages />,
+        },
+        {
+          path: "/messagesproviders",
+          element: <ProviderMessage />,
         },
         {
           path: "/checkmessages",

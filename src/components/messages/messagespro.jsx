@@ -1,50 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "./message.scss";
+import { useParams } from "react-router-dom";
+import newRequests from "../../API/Newrequest";
 import Sidebar from "../ProvidersDashboard/Sidebar";
 
 const Messagespro = () => {
-  const [expandedIds, setExpandedIds] = useState([]); // Tracks expanded message IDs
-  const [replies, setReplies] = useState({}); // Stores replies keyed by message ID
+  const [messages, setMessages] = useState([]);
+  const [initialMessage, setInitialMessage] = useState("");
+  const { id: providerid } = useParams();
+  const clientid = JSON.parse(localStorage.getItem("currentUser"))?._id;
+  const [uniqueId, setUniqueId] = useState(""); // State to store uniqueId
+  const [refresh, setRefresh] = useState(false); // State to trigger useEffect
 
-  const messages = [
-    {
-      id: 1,
-      content:
-        "This is the first example message that is quite long to demonstrate the expanding functionality when the message is clicked. Click to see more!",
-      timeSent: "2024-02-08T14:30:00Z",
-    },
-    {
-      id: 2,
-      content:
-        "This is the second example message with enough length to require expanding and collapsing. Explore the functionality by clicking!",
-      timeSent: "2024-02-08T15:00:00Z",
-    },
-  ];
-
-  // Toggles the expanded state for a given message ID
-  const toggleExpand = (id) => {
-    setExpandedIds((currentIds) =>
-      currentIds.includes(id)
-        ? currentIds.filter((expandedId) => expandedId !== id)
-        : [...currentIds, id]
-    );
+  const handleInitialMessageChange = (e) => {
+    setInitialMessage(e.target.value);
   };
 
-  // Updates the reply for a given message ID
-  const handleReplyChange = (id, value) => {
-    setReplies((currentReplies) => ({
-      ...currentReplies,
-      [id]: value,
-    }));
+  const sendInitialMessage = async () => {
+    if (!initialMessage.trim()) return;
+
+    const messagedetails = {
+      clientid,
+      providerid,
+      message: initialMessage,
+      sender: "user",
+    };
+
+    try {
+      const response = await newRequests.post("/postmessage", messagedetails);
+      console.log(response.data);
+      setUniqueId(response.data.uniqueid); // Save uniqueId for fetching messages
+      setInitialMessage("");
+      setRefresh(!refresh); // Trigger useEffect to refresh messages
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    }
   };
 
-  // Sends the reply for a given message ID and prevents expanding/collapsing
-  const sendReply = (id, e) => {
-    e.stopPropagation(); // Prevents the click from propagating to the message div
-    console.log(`Reply to message ${id}: ${replies[id]}`);
-    // Implement sending reply logic here
-  };
+  useEffect(() => {
+    if (!uniqueId) return; // Ensure uniqueId is set before fetching messages
+
+    const getmessages = async () => {
+      try {
+        const res = await newRequests.get(`/getmessage/${uniqueId}`);
+        console.log(res.data);
+        setMessages(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getmessages();
+
+    const interval = setInterval(() => {
+      getmessages(); // Periodically fetch messages for real-time updates
+    }, 3000); // Adjust interval as needed
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [uniqueId, refresh]); // Depend on uniqueId and refresh state
 
   return (
     <>
@@ -52,47 +66,26 @@ const Messagespro = () => {
       <div className="messages">
         {messages.map((message) => (
           <div
-            key={message.id}
+            key={message._id}
             className={`message ${
-              expandedIds.includes(message.id) ? "expanded" : ""
-            }`}
-            onClick={() => toggleExpand(message.id)}>
-            <p>
-              {expandedIds.includes(message.id)
-                ? message.content
-                : `${message.content.substring(0, 50)}...`}
-            </p>
+              message.sender === "user" ? "user-message" : "provider-message"
+            }`}>
+            <>{message.sender}</>
+            <p>{message.message}</p>
             <p className="time-sent">
-              {moment(message.timeSent).format("LLLL")}
+              {moment(message.createdAt).format("LLLL")}
             </p>
-            {expandedIds.includes(message.id) && (
-              <div className="reply-section">
-                <div
-                  className="reply-container"
-                  onClick={(e) => e.stopPropagation()}>
-                  <input
-                    type="text"
-                    placeholder="Type your reply here..."
-                    value={replies[message.id] || ""}
-                    onChange={(e) =>
-                      handleReplyChange(message.id, e.target.value)
-                    }
-                  />
-                  <button onClick={(e) => sendReply(message.id, e)}>
-                    Send
-                  </button>
-                </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleExpand(message.id);
-                  }}>
-                  Close
-                </button>
-              </div>
-            )}
           </div>
         ))}
+        <div className="start-conversation">
+          <input
+            type="text"
+            placeholder="Start a conversation..."
+            value={initialMessage}
+            onChange={handleInitialMessageChange}
+          />
+          <button onClick={sendInitialMessage}>Send</button>
+        </div>
       </div>
     </>
   );
