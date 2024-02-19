@@ -74,7 +74,7 @@ function App() {
           element: <SinglePage />,
         },
         {
-          path: "/messages",
+          path: "/messages/:id",
           element: <Messages />,
         },
         {

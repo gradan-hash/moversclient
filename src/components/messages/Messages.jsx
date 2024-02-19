@@ -3,6 +3,7 @@ import moment from "moment";
 import "./message.scss";
 
 import Sidebarclient from "../Sidebar/Sidebarclient";
+import { useParams } from "react-router-dom";
 
 const Messagespro = () => {
   const [expandedIds, setExpandedIds] = useState([]); // Tracks expanded message IDs
@@ -10,8 +11,11 @@ const Messagespro = () => {
   const [Messages, setMessages] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const { id } = useParams();
+  console.log("id", id)
 
-  console.log(currentUser);
+  const clientid = currentUser._id;
+  console.log(clientid);
 
   const messages = [
     {

@@ -39,6 +39,9 @@ const SinglePage = () => {
     Getsinglepage();
   }, []);
 
+  const providerid = providerdetails._id;
+
+  console.log(providerid);
   const destination = { lat: -1.286389, lng: 36.817223 }; // Example destination
   const watchIdRef = useRef(null);
 
@@ -215,7 +218,9 @@ const SinglePage = () => {
                 </p>
               </div>
 
-              <Link to="/messages" style={{ textDecoration: "none" }}>
+              <Link
+                to={`/messages/${providerid}`}
+                style={{ textDecoration: "none" }}>
                 <button>Message</button>
               </Link>
             </div>
