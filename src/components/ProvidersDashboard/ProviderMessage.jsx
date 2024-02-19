@@ -7,7 +7,7 @@ const ProviderMessage = () => {
   const [messages, setMessages] = useState([]);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  console.log(currentUser);
+  console.log(currentUser._id);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +30,7 @@ const ProviderMessage = () => {
       <Sidebar />
 
       <div>
-        {messages.map((message) => (
+        {messages?.map((message) => (
           <div key={message._id} className="message">
             <p>{message.message}</p>
             <p>From: {message.sender}</p>
