@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ProviderMessage.scss";
 import newRequests from "../../API/Newrequest";
 import Sidebar from "./Sidebar";
+import { Link } from "react-router-dom";
 
 const ProviderMessage = () => {
   const [messages, setMessages] = useState([]);
@@ -11,7 +12,7 @@ const ProviderMessage = () => {
     const fetchData = async () => {
       try {
         const response = await newRequests.get(
-          `/providermessages/${currentUser._id}`
+          `/providermesages/${currentUser._id}`
         );
         console.log(response.data);
 
@@ -34,6 +35,7 @@ const ProviderMessage = () => {
         // Convert the map to an array of messages
         const latestMessages = Object.values(latestMessagesMap);
 
+        console.log(latestMessages);
         setMessages(latestMessages);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -47,14 +49,16 @@ const ProviderMessage = () => {
     <>
       <Sidebar />
 
-      <div>
+      <div className="provider-message">
         {messages.map((message) => (
           <div key={message._id} className="message">
-            <p>{message.message}</p>
-            <p>
-              From: {message.sender} -{" "}
-              {new Date(message.createdAt).toLocaleString()}
-            </p>
+            <Link style={{ textDecoration: "none" }}>
+              <span>message:{message.message}</span>
+              <p>
+                From: {message.sender} -{" "}
+                {new Date(message.createdAt).toLocaleString()}
+              </p>
+            </Link>
           </div>
         ))}
       </div>
