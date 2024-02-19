@@ -1,59 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "./message.scss";
-
-import Sidebarclient from "../Sidebar/Sidebarclient";
 import { useParams } from "react-router-dom";
+import newRequests from "../../API/Newrequest";
+import Sidebar from "../ProvidersDashboard/Sidebar";
+import Sidebarclient from "../Sidebar/Sidebarclient";
 
 const Messagespro = () => {
-  const [expandedIds, setExpandedIds] = useState([]); // Tracks expanded message IDs
-  const [replies, setReplies] = useState({}); // Stores replies keyed by message ID
-  const [Messages, setMessages] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [initialMessage, setInitialMessage] = useState(""); // For initial message input
+  const { id: providerid } = useParams();
+  const clientid = JSON.parse(localStorage.getItem("currentUser"))?._id;
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const { id } = useParams();
-  console.log("id", id)
-
-  const clientid = currentUser._id;
-  console.log(clientid);
-
-  const messages = [
-    {
-      id: 1,
-      content:
-        "This is the first example message that is quite long to demonstrate the expanding functionality when the message is clicked. Click to see more!",
-      timeSent: "2024-02-08T14:30:00Z",
-    },
-    {
-      id: 2,
-      content:
-        "This is the second example message with enough length to require expanding and collapsing. Explore the functionality by clicking!",
-      timeSent: "2024-02-08T15:00:00Z",
-    },
-  ];
-
-  // Toggles the expanded state for a given message ID
-  const toggleExpand = (id) => {
-    setExpandedIds((prevIds) =>
-      prevIds.includes(id)
-        ? prevIds.filter((prevId) => prevId !== id)
-        : [...prevIds, id]
-    );
+  const handleInitialMessageChange = (e) => {
+    setInitialMessage(e.target.value);
   };
 
-  // Updates the reply for a given message ID
-  const handleReplyChange = (id, value) => {
-    setReplies((currentReplies) => ({
-      ...currentReplies,
-      [id]: value,
-    }));
-  };
+  const sendInitialMessage = async () => {
+    if (!initialMessage.trim()) return;
 
-  // Sends the reply for a given message ID and prevents expanding/collapsing
-  const sendReply = (id, e) => {
-    e.stopPropagation(); // Prevents the click from propagating to the message div
-    console.log(`Reply to message ${id}: ${replies[id]}`);
-    // Implement sending reply logic here
+    const messagedetails = {
+      clientid,
+      providerid,
+      message: initialMessage,
+      sender: "user",
+    };
+    console.log(messagedetails);
+
+    try {
+      const response = await newRequests.post("/postmessage", messagedetails);
+      setMessages(response.data); // Add the new message to the conversation
+      setInitialMessage(""); // Clear the input field
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    }
   };
 
   return (
@@ -62,47 +42,26 @@ const Messagespro = () => {
       <div className="messages">
         {messages.map((message) => (
           <div
-            key={message.id}
+            key={message._id}
             className={`message ${
-              expandedIds.includes(message.id) ? "expanded" : ""
-            }`}
-            onClick={() => toggleExpand(message.id)}>
-            <p>
-              {expandedIds.includes(message.id)
-                ? message.content
-                : `${message.content.substring(0, 50)}...`}
-            </p>
+              message.sender === "user" ? "user-message" : "provider-message"
+            }`}>
+            <p>{message.content}</p>
             <p className="time-sent">
               {moment(message.timeSent).format("LLLL")}
             </p>
-            {expandedIds.includes(message.id) && (
-              <div className="reply-section">
-                <div
-                  className="reply-container"
-                  onClick={(e) => e.stopPropagation()}>
-                  <input
-                    type="text"
-                    placeholder="Type your reply here..."
-                    value={replies[message.id] || ""}
-                    onChange={(e) =>
-                      handleReplyChange(message.id, e.target.value)
-                    }
-                  />
-                  <button onClick={(e) => sendReply(message.id, e)}>
-                    Send
-                  </button>
-                </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleExpand(message.id);
-                  }}>
-                  Close
-                </button>
-              </div>
-            )}
           </div>
         ))}
+       
+        <div className="start-conversation">
+          <input
+            type="text"
+            placeholder="Start a conversation..."
+            value={initialMessage}
+            onChange={handleInitialMessageChange}
+          />
+          <button onClick={sendInitialMessage}>Send</button>
+        </div>
       </div>
     </>
   );
