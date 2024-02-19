@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "./message.scss";
 
@@ -7,6 +7,11 @@ import Sidebarclient from "../Sidebar/Sidebarclient";
 const Messagespro = () => {
   const [expandedIds, setExpandedIds] = useState([]); // Tracks expanded message IDs
   const [replies, setReplies] = useState({}); // Stores replies keyed by message ID
+  const [Messages, setMessages] = useState("");
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  console.log(currentUser);
 
   const messages = [
     {
