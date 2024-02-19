@@ -3,61 +3,68 @@ body {
 }
 
 .messages {
+  display: flex;
+  flex-direction: column-reverse; // Invert the order of elements
+  align-items: flex-start; // Align items to the start of the flex container
   width: 100%;
-  max-width: 600px; /* Adjust as needed */
+  height: calc(100vh - 120px); // Adjust height based on your header/footer size
   margin: 0 auto;
   padding: 20px;
   margin-top: 70px;
+  // overflow: auto;
+  gap: 20px; // Add space between messages without using margin
 
   .message {
-    margin-bottom: 20px;
     padding: 10px;
     border-radius: 8px;
     background-color: #f0f0f0;
-    position: relative;
-    overflow-wrap: break-word;
+    max-width: 80%; // Limit message width for better readability
     word-wrap: break-word;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Optional: adds shadow for depth
 
     &.user-message {
-      background-color: #cdf1d8;
-      align-self: flex-start;
+      color: black;
+      margin-left: auto; // Align user messages to right
+      background-color: #dcf8c6; // Different background for user messages
     }
 
     &.provider-message {
-      background-color: #d7e0f0;
-      align-self: flex-end;
+      color: blue;
+      margin-right: auto; // Align provider messages to left
     }
 
     .time-sent {
       font-size: 0.8rem;
       color: #666;
-      position: absolute;
-      bottom: -15px;
-      right: 5px;
+      position: relative;
+      display: block; // Make time visible below the message
+      text-align: right; // Align time to the right
+      margin-top: 5px; // Space between message and time
     }
   }
 
   .start-conversation {
+    order: -1; // Place input at the bottom of the container
+    width: 100%; // Ensure input field and button span the full width
     display: flex;
     align-items: center;
+    margin-top: auto; // Push conversation start to the bottom
 
     input[type="text"] {
-      flex: 1;
+      flex-grow: 1;
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       margin-right: 10px;
-      font-size: 1rem;
     }
 
     button {
       padding: 10px 20px;
       border-radius: 8px;
       background-color: #007bff;
-      color: #fff;
+      color: white;
       border: none;
       cursor: pointer;
-      font-size: 1rem;
 
       &:hover {
         background-color: #0056b3;

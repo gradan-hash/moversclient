@@ -3,14 +3,15 @@ import moment from "moment";
 import "./message.scss";
 import { useParams } from "react-router-dom";
 import newRequests from "../../API/Newrequest";
-import Sidebar from "../ProvidersDashboard/Sidebar";
 import Sidebarclient from "../Sidebar/Sidebarclient";
 
-const Messagespro = () => {
+const Messages = () => {
   const [messages, setMessages] = useState([]);
-  const [initialMessage, setInitialMessage] = useState(""); // For initial message input
+  const [initialMessage, setInitialMessage] = useState("");
   const { id: providerid } = useParams();
   const clientid = JSON.parse(localStorage.getItem("currentUser"))?._id;
+  const [uniqueId, setUniqueId] = useState(""); // State to store uniqueId
+  const [refresh, setRefresh] = useState(false); // State to trigger useEffect
 
   const handleInitialMessageChange = (e) => {
     setInitialMessage(e.target.value);
@@ -25,16 +26,39 @@ const Messagespro = () => {
       message: initialMessage,
       sender: "user",
     };
-    console.log(messagedetails);
 
     try {
       const response = await newRequests.post("/postmessage", messagedetails);
-      setMessages(response.data); // Add the new message to the conversation
-      setInitialMessage(""); // Clear the input field
+      console.log(response.data);
+      setUniqueId(response.data.uniqueid); // Save uniqueId for fetching messages
+      setInitialMessage("");
+      setRefresh(!refresh); // Trigger useEffect to refresh messages
     } catch (error) {
       console.error("Failed to send message:", error);
     }
   };
+
+  useEffect(() => {
+    if (!uniqueId) return; // Ensure uniqueId is set before fetching messages
+
+    const getmessages = async () => {
+      try {
+        const res = await newRequests.get(`/getmessage/${uniqueId}`);
+        console.log(res.data);
+        setMessages(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getmessages();
+
+    const interval = setInterval(() => {
+      getmessages(); // Periodically fetch messages for real-time updates
+    }, 3000); // Adjust interval as needed
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [uniqueId, refresh]); // Depend on uniqueId and refresh state
 
   return (
     <>
@@ -46,13 +70,13 @@ const Messagespro = () => {
             className={`message ${
               message.sender === "user" ? "user-message" : "provider-message"
             }`}>
-            <p>{message.content}</p>
+            <>{message.sender}</>
+            <p>{message.message}</p>
             <p className="time-sent">
-              {moment(message.timeSent).format("LLLL")}
+              {moment(message.createdAt).format("LLLL")}
             </p>
           </div>
         ))}
-       
         <div className="start-conversation">
           <input
             type="text"
@@ -67,4 +91,4 @@ const Messagespro = () => {
   );
 };
 
-export default Messagespro;
+export default Messages;
