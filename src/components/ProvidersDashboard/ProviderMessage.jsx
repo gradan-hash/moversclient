@@ -52,7 +52,9 @@ const ProviderMessage = () => {
       <div className="provider-message">
         {messages.map((message) => (
           <div key={message._id} className="message">
-            <Link style={{ textDecoration: "none" }}>
+            <Link
+              to={`/checkmessages/${message.uniqueid}`}
+              style={{ textDecoration: "none" }}>
               <span>message:{message.message}</span>
               <p>
                 From: {message.sender} -{" "}
