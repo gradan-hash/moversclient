@@ -6,12 +6,16 @@ import newRequests from "../../API/Newrequest";
 import Sidebarclient from "../Sidebar/Sidebarclient";
 
 const Messages = () => {
-  const [messages, setMessages] = useState([]);
+  const [conversation, setConversation] = useState({
+    messages: [],
+    replies: [],
+  }); // Adjust state to include both messages and replies
   const [initialMessage, setInitialMessage] = useState("");
   const { id: providerid } = useParams();
   const clientid = JSON.parse(localStorage.getItem("currentUser"))?._id;
-  const [uniqueId, setUniqueId] = useState(""); // State to store uniqueId
-  const [refresh, setRefresh] = useState(false); // State to trigger useEffect
+  const username = JSON.parse(localStorage.getItem("currentUser"))?.username;
+  const [uniqueId, setUniqueId] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   const handleInitialMessageChange = (e) => {
     setInitialMessage(e.target.value);
@@ -20,67 +24,81 @@ const Messages = () => {
   const sendInitialMessage = async () => {
     if (!initialMessage.trim()) return;
 
-    const messagedetails = {
+    const messageDetails = {
       clientid,
       providerid,
       message: initialMessage,
-      sender: "user",
+      sender: username,
     };
 
     try {
-      const response = await newRequests.post("/postmessage", messagedetails);
+      const response = await newRequests.post("/postmessage", messageDetails);
       console.log(response.data);
-      setUniqueId(response.data.uniqueid); // Save uniqueId for fetching messages
+      setUniqueId(response.data.uniqueid); // Assuming this sets up or adds to the ongoing conversation
       setInitialMessage("");
-      setRefresh(!refresh); // Trigger useEffect to refresh messages
+      setRefresh(!refresh);
     } catch (error) {
       console.error("Failed to send message:", error);
     }
   };
 
   useEffect(() => {
-    if (!uniqueId) return; // Ensure uniqueId is set before fetching messages
+    if (!uniqueId) return;
 
-    const getmessages = async () => {
+    const getMessages = async () => {
       try {
         const res = await newRequests.get(`/getmessage/${uniqueId}`);
         console.log(res.data);
-        setMessages(res.data);
+        // Assuming you're only interested in the first conversation object
+        if (res.data && res.data.length > 0) {
+          setConversation(res.data[0]); // Set the first object of the array to conversation
+        } else {
+          console.error(
+            "Received empty response or response with no conversation."
+          );
+        }
       } catch (error) {
         console.error(error);
       }
     };
 
-    getmessages();
+    getMessages();
 
     const interval = setInterval(() => {
-      getmessages(); // Periodically fetch messages for real-time updates
-    }, 3000); // Adjust interval as needed
+      getMessages();
+    }, 3000);
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [uniqueId, refresh]); // Depend on uniqueId and refresh state
+    return () => clearInterval(interval);
+  }, [uniqueId, refresh]);
 
   return (
     <>
       <Sidebarclient />
       <div className="messages">
-        {messages.map((message) => (
-          <div
-            key={message._id}
-            className={`message ${
-              message.sender === "user" ? "user-message" : "provider-message"
-            }`}>
-            <>{message.sender}</>
-            <p>{message.message}</p>
+        {/* Render Messages */}
+        {conversation.messages.map((msg, index) => (
+          <div key={index} className="user-message">
+            <div>{msg.sender}</div>
+            <p>{msg.message}</p>
+            <p className="time-sent">{moment(msg.createdAt).format("LLLL")}</p>
+          </div>
+        ))}
+
+        {/* Render Replies */}
+        {conversation.replies.map((reply, index) => (
+          <div key={`reply-${index}`} className="provider-message">
+            <div>{reply.sender}</div>
+            <p>{reply.replyMessage}</p>
             <p className="time-sent">
-              {moment(message.createdAt).format("LLLL")}
+              {moment(reply.createdAt).format("LLLL")}
             </p>
           </div>
         ))}
+
         <div className="start-conversation">
           <input
             type="text"
-            placeholder="Start a conversation..."
+            placeholder="Reply..."
             value={initialMessage}
             onChange={handleInitialMessageChange}
           />

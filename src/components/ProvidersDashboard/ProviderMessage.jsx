@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 
 const ProviderMessage = () => {
-  const [messages, setMessages] = useState([]);
+  const [conversations, setConversations] = useState([]);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
@@ -14,51 +14,49 @@ const ProviderMessage = () => {
         const response = await newRequests.get(
           `/providermesages/${currentUser._id}`
         );
-        console.log(response.data);
-
-        // Initialize an object to hold the latest message for each uniqueid
-        const latestMessagesMap = {};
-
-        // Iterate over each message to populate the map
-        response.data.forEach((message) => {
-          const uniqueId = message.uniqueid;
-          // If this uniqueid is not yet in the map or if this message is newer, update the map
-          if (
-            !latestMessagesMap[uniqueId] ||
-            new Date(message.createdAt) >
-              new Date(latestMessagesMap[uniqueId].createdAt)
-          ) {
-            latestMessagesMap[uniqueId] = message;
-          }
+        const latestActivities = response.data.map((conversation) => {
+          // Assuming each conversation object includes messages and replies arrays
+          const allActivities = [
+            ...conversation.messages,
+            ...conversation.replies,
+          ];
+          const latestActivity = allActivities.reduce((latest, current) => {
+            return new Date(latest.createdAt) > new Date(current.createdAt)
+              ? latest
+              : current;
+          }, allActivities[0]); // Initialize with the first activity as the latest
+          return { ...conversation, latestActivity };
         });
 
-        // Convert the map to an array of messages
-        const latestMessages = Object.values(latestMessagesMap);
-
-        console.log(latestMessages);
-        setMessages(latestMessages);
+        console.log(latestActivities);
+        setConversations(latestActivities);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [currentUser._id]); // Added dependency to re-fetch if the currentUser._id changes
+  }, [currentUser._id]);
 
   return (
     <>
       <Sidebar />
-
       <div className="provider-message">
-        {messages.map((message) => (
-          <div key={message._id} className="message">
+        {conversations.map((conversation) => (
+          <div key={conversation._id} className="message">
             <Link
-              to={`/checkmessages/${message.uniqueid}`}
+              to={`/checkmessages/${conversation.uniqueid}`}
               style={{ textDecoration: "none" }}>
-              <span>message:{message.message}</span>
+              <span>
+                Latest Activity:{" "}
+                {conversation.latestActivity.message ||
+                  conversation.latestActivity.replyMessage}
+              </span>
               <p>
-                From: {message.sender} -{" "}
-                {new Date(message.createdAt).toLocaleString()}
+                From: {conversation.latestActivity.sender} -{" "}
+                {new Date(
+                  conversation.latestActivity.createdAt
+                ).toLocaleString()}
               </p>
             </Link>
           </div>

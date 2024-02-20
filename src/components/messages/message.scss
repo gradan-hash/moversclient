@@ -11,7 +11,7 @@ body {
   margin: 0 auto;
   padding: 20px;
   margin-top: 70px;
-  // overflow: auto;
+  overflow: auto;
   gap: 20px; // Add space between messages without using margin
   color: black;
 
@@ -23,13 +23,13 @@ body {
     word-wrap: break-word;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Optional: adds shadow for depth
 
-    &.user-message {
+    .user-message {
       color: black;
       margin-left: auto; // Align user messages to right
       background-color: #dcf8c6; // Different background for user messages
     }
 
-    &.provider-message {
+    .provider-message {
       color: blue;
       margin-right: auto; // Align provider messages to left
     }
