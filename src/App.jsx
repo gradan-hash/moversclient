@@ -17,7 +17,7 @@ import ProvidersDash from "./components/ProvidersDashboard/ProvidersDash";
 import CurrentOrders from "./components/Orders/CurrentOrders";
 import OngoingOrders from "./components/Orders/OngoingOrders";
 import Reports from "./components/Orders/Reports";
-import Messagespro from "./components/messages/messagespro";
+
 import Upload from "./components/Upload/Upload";
 import Sidebar from "./components/ProvidersDashboard/Sidebar";
 import Storageservices from "./components/dashboard/Storageservices";
@@ -25,6 +25,7 @@ import MyTrips from "./components/Trips/Mytrips";
 import ClientOrders from "./components/Orders/ClientOrders";
 import Providerslogin from "./components/login/Providerslog";
 import ProviderMessage from "./components/ProvidersDashboard/Providermessage";
+import Messagespro from "./components/messages/Messagespro";
 
 function App() {
   const queryClient = new QueryClient();
@@ -83,7 +84,7 @@ function App() {
           element: <ProviderMessage />,
         },
         {
-          path: "/checkmessages/:id",
+          path: "/checkmessages/:uniqueid",
           element: <Messagespro />,
         },
         {
