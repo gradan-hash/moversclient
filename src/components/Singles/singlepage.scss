@@ -28,6 +28,8 @@
       }
 
       button {
+        color: white;
+        margin-left: 10px;
       }
     }
   }
@@ -38,14 +40,13 @@
   }
 }
 
-// Make sure the map container has a specific height or it might not be visible
 .right {
   width: 30vw;
   height: 50vh; // Adjust based on your layout needs
 
   .maps {
-    height: 400px; // Set a fixed height for the map container
-    width: 80%; // Adjust width as per your design requirement
+    height: 50vh; // Set a fixed height for the map container
+    width: 50vw;
     margin-top: 20px;
     margin-bottom: 20px;
   }
