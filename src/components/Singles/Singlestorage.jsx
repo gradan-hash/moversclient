@@ -182,15 +182,14 @@ const SinglePage = () => {
     fetchLocationAndUpdateMap();
   }, []);
 
-  const companyid = company._id;
-  const providerdetailsid = providerdetails._id;
-  const currentUserid = currentUser._id;
-
+  const itemid = company._id;
+  const providerid = providerdetails._id;
+  const usernameid = currentUser._id;
 
   const requestdata = {
-    companyid,
-    providerdetailsid,
-    currentUserid,
+    itemid,
+    providerid,
+    usernameid,
   };
 
   console.log("details", requestdata);
