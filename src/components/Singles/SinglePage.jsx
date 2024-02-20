@@ -5,6 +5,7 @@ import movers from "../../assets/movers.jpeg";
 import Sidebarclient from "../Sidebar/Sidebarclient";
 import { Link, useParams } from "react-router-dom";
 import Requests from "../../API/Providerequest";
+import newRequests from "../../API/Newrequest";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZ3JhZGFuIiwiYSI6ImNsc2QwOGhybDB3dnQyaW9hZ3l3cXJxbncifQ.2mVTkWGbItvkXiXgd_-vMw";
@@ -39,9 +40,9 @@ const SinglePage = () => {
     Getsinglepage();
   }, []);
 
-  const providerid = providerdetails._id;
+  const d = providerdetails._id;
 
-  console.log(providerid);
+  console.log(d);
   const destination = { lat: -1.286389, lng: 36.817223 }; // Example destination
   const watchIdRef = useRef(null);
 
@@ -183,6 +184,32 @@ const SinglePage = () => {
     fetchLocationAndUpdateMap();
   }, []);
 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const itemid = company._id;
+  const provideridd = providerdetails._id;
+  const usernameid = currentUser._id;
+
+  const requestdata = {
+    itemid,
+    provideridd,
+    usernameid,
+  };
+  // console.log("details");
+
+  console.log("details", requestdata);
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      alert("Please confirm the request");
+
+      const res = await newRequests.post("/posttrip", requestdata);
+      console.log(res.data)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Sidebarclient />
@@ -218,16 +245,14 @@ const SinglePage = () => {
                 </p>
               </div>
 
-              <Link
-                to={`/messages/${providerid}`}
-                style={{ textDecoration: "none" }}>
+              <Link to={`/messages/${d}`} style={{ textDecoration: "none" }}>
                 <button>Message</button>
               </Link>
 
               <Link
                 to="/clientongoingorders"
                 style={{ textDecoration: "none" }}>
-                <button>Request</button>
+                <button onClick={handleSubmit}>Request</button>
               </Link>
             </div>
           </div>

@@ -191,13 +191,16 @@ const SinglePage = () => {
     providerid,
     usernameid,
   };
+  console.log("details");
+
 
   console.log("details", requestdata);
   const handleSubmit = async () => {
     setLoading(true);
     try {
       alert("Please confirm the request");
-      const res = await newRequests.post("");
+
+      const res = await newRequests.post("/posttrip", requestdata);
       console.log(res.data);
     } catch (error) {
       console.error(error);
