@@ -4,72 +4,76 @@ body {
 
 .messages {
   display: flex;
-  flex-direction: column-reverse; // Invert the order of elements
-  align-items: flex-start; // Align items to the start of the flex container
+  flex-direction: column; // Keep the natural order of elements
+  align-items: flex-start; // Align items to the start for the default left alignment
   width: 100%;
   height: calc(100vh - 120px); // Adjust height based on your header/footer size
   margin: 0 auto;
   padding: 20px;
   margin-top: 70px;
-  overflow: auto;
-  gap: 20px; // Add space between messages without using margin
+  overflow-y: auto; // Ensure only vertical scroll
+  gap: 10px; // Reduce space between messages for a more compact look
   color: black;
+}
 
-  .message {
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #f0f0f0;
-    max-width: 80%; // Limit message width for better readability
-    word-wrap: break-word;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Optional: adds shadow for depth
+.message {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  width: 50vw;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Optional: adds shadow for depth
+  border: 1px solid #ccc; // Added border for better visibility
 
-    .user-message {
-      color: black;
-      margin-left: auto; // Align user messages to right
-      background-color: #dcf8c6; // Different background for user messages
-    }
-
-    .provider-message {
-      color: blue;
-      margin-right: auto; // Align provider messages to left
-    }
-
-    .time-sent {
-      font-size: 0.8rem;
-      color: #666;
-      position: relative;
-      display: block; // Make time visible below the message
-      text-align: right; // Align time to the right
-      margin-top: 5px; // Space between message and time
-    }
+  &.user-message {
+    align-self: flex-start; // Align user messages to left
+    background-color: #007bff; // Change to blue for user messages
+    color: white; // White text for better readability on blue background
+    border-color: #007bff; // Matching border color to background
   }
 
-  .start-conversation {
-    order: -1; // Place input at the bottom of the container
-    width: 100%; // Ensure input field and button span the full width
-    display: flex;
-    align-items: center;
-    margin-top: auto; // Push conversation start to the bottom
+  &.provider-message {
+    align-self: flex-end; // Align provider messages to right
+    background-color: #28a745; // Change to green for provider messages
+    color: white; // White text for better readability on green background
+    border-color: #28a745; // Matching border color to background
+  }
 
-    input[type="text"] {
-      flex-grow: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-right: 10px;
-    }
+  .time-sent {
+    font-size: 0.8rem;
+    color: #666;
+    position: relative;
+    display: block; // Make time visible below the message
+    text-align: right; // Align time to the right
+    margin-top: 5px; // Space between message and time
+  }
+}
 
-    button {
-      padding: 10px 20px;
-      border-radius: 8px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
+.start-conversation {
+  order: 1; // Keep input at the top of the container
+  width: 100%; // Ensure input field and button span the full width
+  display: flex;
+  align-items: center;
+  padding-top: 20px; // Provide some space above the input field
 
-      &:hover {
-        background-color: #0056b3;
-      }
+  input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0056b3;
     }
   }
 }

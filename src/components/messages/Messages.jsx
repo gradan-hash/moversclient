@@ -75,26 +75,28 @@ const Messages = () => {
     <>
       <Sidebarclient />
       <div className="messages">
-        {/* Render Messages */}
-        {conversation.messages.map((msg, index) => (
-          <div key={index} className="user-message">
-            <div>{msg.sender}</div>
-            <p>{msg.message}</p>
-            <p className="time-sent">{moment(msg.createdAt).format("LLLL")}</p>
-          </div>
-        ))}
+        <div className="message">
+          {conversation.messages.map((msg, index) => (
+            <div key={index} className="user-message">
+              <div>{msg.sender}</div>
+              <p>{msg.message}</p>
+              <p className="time-sent">
+                {moment(msg.createdAt).format("LLLL")}
+              </p>
+            </div>
+          ))}
 
-        {/* Render Replies */}
-        {conversation.replies.map((reply, index) => (
-          <div key={`reply-${index}`} className="provider-message">
-            <div>{reply.sender}</div>
-            <p>{reply.replyMessage}</p>
-            <p className="time-sent">
-              {moment(reply.createdAt).format("LLLL")}
-            </p>
-          </div>
-        ))}
-
+          {/* Render Replies */}
+          {conversation.replies.map((reply, index) => (
+            <div key={`reply-${index}`} className="provider-message">
+              <div>{reply.sender}</div>
+              <p>{reply.replyMessage}</p>
+              <p className="time-sent">
+                {moment(reply.createdAt).format("LLLL")}
+              </p>
+            </div>
+          ))}
+        </div>
         <div className="start-conversation">
           <input
             type="text"
