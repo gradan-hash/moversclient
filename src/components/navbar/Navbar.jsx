@@ -36,9 +36,7 @@ const Navbar = () => {
               <span className="message-count">{messageCount}</span>
             </div>
           </Link>
-          <Link to="/contact" className="nav-item">
-            Contact
-          </Link>
+
           {currentUser ? (
             <Link onClick={handleLogout} className="nav-item">
               Logout
