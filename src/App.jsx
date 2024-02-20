@@ -83,7 +83,7 @@ function App() {
           element: <ProviderMessage />,
         },
         {
-          path: "/checkmessages",
+          path: "/checkmessages/:id",
           element: <Messagespro />,
         },
         {
