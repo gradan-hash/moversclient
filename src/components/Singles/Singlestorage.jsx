@@ -5,6 +5,7 @@ import movers from "../../assets/movers.jpeg";
 import Sidebarclient from "../Sidebar/Sidebarclient";
 import { useParams } from "react-router-dom";
 import Requests from "../../API/Providerequest";
+import newRequests from "../../API/Newrequest";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZ3JhZGFuIiwiYSI6ImNsc2QwOGhybDB3dnQyaW9hZ3l3cXJxbncifQ.2mVTkWGbItvkXiXgd_-vMw";
@@ -21,6 +22,8 @@ const SinglePage = () => {
   const [providerdetails, setProviderdetails] = useState("");
 
   const { id } = useParams();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  // console.log(currentUser);
 
   useEffect(() => {
     const Getsinglepage = async () => {
@@ -179,6 +182,29 @@ const SinglePage = () => {
     fetchLocationAndUpdateMap();
   }, []);
 
+  const companyid = company._id;
+  const providerdetailsid = providerdetails._id;
+  const currentUserid = currentUser._id;
+
+
+  const requestdata = {
+    companyid,
+    providerdetailsid,
+    currentUserid,
+  };
+
+  console.log("details", requestdata);
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      alert("Please confirm the request");
+      const res = await newRequests.post("");
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Sidebarclient />
@@ -216,8 +242,10 @@ const SinglePage = () => {
               <Link to="/messages" style={{ textDecoration: "none" }}>
                 <button>Message</button>
               </Link>
-              <Link to="/clientongoingorders" style={{ textDecoration: "none" }}>
-                <button>Request</button>
+              <Link
+                to="/clientongoingorders"
+                style={{ textDecoration: "none" }}>
+                <button onSubmit={handleSubmit}>Request</button>
               </Link>
             </div>
           </div>
