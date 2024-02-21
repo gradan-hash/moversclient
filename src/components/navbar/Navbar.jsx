@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.scss";
 import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
 import newRequests from "../../API/Newrequest";
 
 const Navbar = () => {
-  const messageCount = 0; // Assuming this could be dynamic
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const messageCount = 0; 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}"); 
+  const [user, setUser] = useState(false); 
+
+  useEffect(() => {
+    if (currentUser && !currentUser.companytype) {
+      setUser(true);
+    }
+  }, [currentUser]);
 
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -32,7 +39,9 @@ const Navbar = () => {
             style={{ textDecoration: "none" }}
             className="nav-item">
             <div className="message-icon-wrapper">
-              <MarkChatUnreadIcon className="messageicon" />
+              <Link to={user ? "/messages/:id" : "//messagesproviders"}>
+                <MarkChatUnreadIcon className="messageicon" />
+              </Link>
               <span className="message-count">{messageCount}</span>
             </div>
           </Link>

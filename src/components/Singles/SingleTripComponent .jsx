@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import newRequests from "../../API/Newrequest";
 import "./SingleTripComponent.scss"; // Ensure you create appropriate styling
 import Sidebarclient from "../Sidebar/Sidebarclient";
@@ -43,7 +43,7 @@ const SingleTripComponent = () => {
     paymentOption,
     rating,
   };
-
+  const navigate = useNavigate();
   // console.log(submitdetails);
   const submitRating = async () => {
     try {
@@ -51,8 +51,8 @@ const SingleTripComponent = () => {
 
       console.log(res.data);
       alert("Order completed. Thank you for your rating!");
-      setShowRatingPrompt(false); // Hide the rating prompt
-      // Redirect or update the UI as needed
+      setShowRatingPrompt(false);
+      navigate("/mytrips");
     } catch (error) {
       console.error("Failed to submit rating:", error);
     }

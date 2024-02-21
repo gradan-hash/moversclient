@@ -39,7 +39,7 @@ const MyTrips = () => {
             <tr>
               <th>Rating</th>
               <th>Quotation</th>
-              <th>Company</th>
+              <th>CompanyName</th>
               <th>Operation Location</th>
             </tr>
           </thead>
