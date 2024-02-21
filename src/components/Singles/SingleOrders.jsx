@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import newRequests from "../../API/Newrequest";
 import "./SingleTripComponent.scss"; // Ensure you create appropriate styling
 import Sidebarclient from "../Sidebar/Sidebarclient";
+import Sidebar from "../ProvidersDashboard/Sidebar";
 
 const SingleOrders = () => {
   const { id } = useParams(); // Get trip ID from URL
@@ -17,6 +18,7 @@ const SingleOrders = () => {
         console.log(response.data);
 
         setTripDetails(response.data);
+        // console.log("iddddd",response.data._id);
         settripId(response.data._id);
       } catch (error) {
         console.error("Failed to fetch trip details:", error);
@@ -25,12 +27,17 @@ const SingleOrders = () => {
 
     fetchTripDetails();
   }, [id]);
+
+  // console.log("_id", tripId);
   const navigate = useNavigate();
+
   const completeOrder = async () => {
     try {
-      const res = await newRequests.post("/", tripId);
+      console.log(tripId);
+      const res = await newRequests.post("/updatependingTrip", tripId);
       console.log(res.data);
-      navigate("/");
+      alert("Success");
+      // navigate("/ongoingorders");
     } catch (error) {
       console.error(error);
     }
@@ -40,7 +47,7 @@ const SingleOrders = () => {
 
   return (
     <>
-      <Sidebarclient />
+      <Sidebar />
 
       <div className="trip-details">
         <h2>Trip Details</h2>
