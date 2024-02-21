@@ -33,10 +33,20 @@ const SingleTripComponent = () => {
     setShowRatingPrompt(true); // Show the rating prompt
   };
 
+  const tripId = tripDetails._id;
+  console.log(tripId);
+  const submitdetails = {
+    tripId,
+    paymentOption,
+    rating,
+  };
+
+  console.log(submitdetails);
   const submitRating = async () => {
     try {
-      // Example API call to save the rating: await newRequests.post(`/rateTrip/${id}`, { rating });
-      console.log("Rating submitted:", rating);
+      const res = await newRequests.post("/completeTrip", submitdetails);
+
+      console.log(res.data);
       alert("Order completed. Thank you for your rating!");
       setShowRatingPrompt(false); // Hide the rating prompt
       // Redirect or update the UI as needed
