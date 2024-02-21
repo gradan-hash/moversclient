@@ -136,7 +136,7 @@ const Upload = () => {
               />
             </div>
             <div className="form-group">
-              <label>cartype</label>
+              <label>Cartype/Storagetype</label>
               <input
                 type="text"
                 value={cartype}
