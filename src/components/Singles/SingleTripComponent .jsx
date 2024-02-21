@@ -8,6 +8,7 @@ const SingleTripComponent = () => {
   const { id } = useParams(); // Get trip ID from URL
   const [tripDetails, setTripDetails] = useState(null);
   const [paymentOption, setPaymentOption] = useState("");
+  const [tripId, settripId] = useState("");
   const [showRatingPrompt, setShowRatingPrompt] = useState(false);
   const [rating, setRating] = useState(0);
 
@@ -16,7 +17,9 @@ const SingleTripComponent = () => {
       try {
         const response = await newRequests.get(`/singleTrip/${id}`);
         console.log(response.data);
+
         setTripDetails(response.data);
+        settripId(response.data._id);
       } catch (error) {
         console.error("Failed to fetch trip details:", error);
       }
@@ -33,15 +36,15 @@ const SingleTripComponent = () => {
     setShowRatingPrompt(true); // Show the rating prompt
   };
 
-  const tripId = tripDetails._id;
-  console.log(tripId);
+  // const tripId = tripDetails._id;
+  // console.log(tripId);
   const submitdetails = {
     tripId,
     paymentOption,
     rating,
   };
 
-  console.log(submitdetails);
+  // console.log(submitdetails);
   const submitRating = async () => {
     try {
       const res = await newRequests.post("/completeTrip", submitdetails);

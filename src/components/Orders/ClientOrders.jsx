@@ -10,7 +10,8 @@ const ClientOrders = () => {
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const res = await newRequests.get("/getAllTrips");
+        const res = await newRequests.get("/getAllPendingTrips");
+        console.log(res.data);
         setTrips(res.data); // Set the fetched trips data to the state
       } catch (error) {
         console.log(error);
