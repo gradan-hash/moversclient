@@ -7,6 +7,7 @@ import Sidebarclient from "../Sidebar/Sidebarclient";
 const SingleTripComponent = () => {
   const { id } = useParams(); // Get trip ID from URL
   const [tripDetails, setTripDetails] = useState(null);
+  const [paymentOption, setPaymentOption] = useState("");
 
   useEffect(() => {
     const fetchTripDetails = async () => {
@@ -21,6 +22,10 @@ const SingleTripComponent = () => {
 
     fetchTripDetails();
   }, [id]);
+
+  const handlePaymentOptionChange = (option) => {
+    setPaymentOption(option);
+  };
 
   const completeOrder = async () => {
     try {
@@ -104,6 +109,18 @@ const SingleTripComponent = () => {
               <strong>Location:</strong>{" "}
               {tripDetails.itemdetails.operationLocation}
             </p>
+          </div>
+          <div className="payment-section">
+            <h3>Complete Payment</h3>
+            <button onClick={() => handlePaymentOptionChange("cash")}>
+              Cash
+            </button>
+            <button onClick={() => handlePaymentOptionChange("mpesa")}>
+              M-Pesa
+            </button>
+            {paymentOption === "mpesa" && (
+              <p>You will be prompted, check your phone.</p>
+            )}
           </div>
         </div>
         <button onClick={completeOrder} className="complete-order-btn">
