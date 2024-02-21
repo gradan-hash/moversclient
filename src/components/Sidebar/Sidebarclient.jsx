@@ -14,11 +14,11 @@ const Sidebarclient = () => {
         </Link>
       </div>
       <div className="sidebar__section sidebar__center">
-        <Link className="sidebar__link" to="/mytrips">
-          <strong>My Trips</strong>
-        </Link>
         <Link to="/clientongoingorders" className="sidebar__link">
           <strong>Ongoing Orders</strong>
+        </Link>
+        <Link className="sidebar__link" to="/mytrips">
+          <strong>My Trips</strong>
         </Link>
       </div>
       <div className="sidebar__section sidebar__bottom">

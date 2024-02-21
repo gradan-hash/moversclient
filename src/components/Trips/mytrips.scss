@@ -10,7 +10,7 @@
   table {
     width: 100%;
     border-collapse: separate; // Allows for spacing between rows
-    border-spacing: 0 20px; // Adds space between rows without affecting column spacing
+    border-spacing: 0 20px; 
     background-color: gray;
     gap: 20px;
 
@@ -28,7 +28,7 @@
     }
 
     tr:hover {
-      background-color: red; // Highlight row on hover
+      // background-color: lightblue; // Highlight row on hover
       td {
         background-color: gray; // Ensure the cells also match the row highlight color
       }
@@ -38,10 +38,11 @@
       background-color: #333; // Different background for expanded details
       color: white; // Ensures text color in detail rows is white for contrast
       text-align: center;
+      
       td {
-        font-size: 0.9rem; // Slightly smaller font for details
-        padding-top: 15px; // Increase padding-top for more space above the details
-        padding-bottom: 15px; // Increase padding-bottom for more space below the details
+        font-size: 1rem; // Slightly smaller font for details
+        padding-top: 25px; // Increase padding-top for more space above the details
+        padding-bottom: 25px; // Increase padding-bottom for more space below the details
       }
     }
   }
