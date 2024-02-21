@@ -8,6 +8,8 @@ const SingleTripComponent = () => {
   const { id } = useParams(); // Get trip ID from URL
   const [tripDetails, setTripDetails] = useState(null);
   const [paymentOption, setPaymentOption] = useState("");
+  const [showRatingPrompt, setShowRatingPrompt] = useState(false);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     const fetchTripDetails = async () => {
@@ -28,12 +30,18 @@ const SingleTripComponent = () => {
   };
 
   const completeOrder = async () => {
+    setShowRatingPrompt(true); // Show the rating prompt
+  };
+
+  const submitRating = async () => {
     try {
-      // Implement the logic to mark an order as completed
-      // Example API call: await newRequests.post(`/completeOrder/${id}`);
-      console.log("Order completed");
+      // Example API call to save the rating: await newRequests.post(`/rateTrip/${id}`, { rating });
+      console.log("Rating submitted:", rating);
+      alert("Order completed. Thank you for your rating!");
+      setShowRatingPrompt(false); // Hide the rating prompt
+      // Redirect or update the UI as needed
     } catch (error) {
-      console.error("Failed to complete order:", error);
+      console.error("Failed to submit rating:", error);
     }
   };
 
@@ -122,6 +130,33 @@ const SingleTripComponent = () => {
               <p>You will be prompted, check your phone.</p>
             )}
           </div>
+          {showRatingPrompt && (
+            <div className="modal-backdrop">
+              <div className="rating-modal">
+                <button
+                  className="close-btn"
+                  onClick={() => setShowRatingPrompt(false)}>
+                  ×
+                </button>
+                <h3>Rate Your Experience (1-5):</h3>
+                <div className="rating-inputs">
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <span
+                      key={num}
+                      className={`rating-option ${
+                        rating >= num ? "selected" : ""
+                      }`}
+                      onClick={() => setRating(num)}>
+                      {num}
+                    </span>
+                  ))}
+                </div>
+                <button onClick={submitRating} className="submit-rating-btn">
+                  Submit Rating
+                </button>
+              </div>
+            </div>
+          )}
         </div>
         <button onClick={completeOrder} className="complete-order-btn">
           Complete Order
