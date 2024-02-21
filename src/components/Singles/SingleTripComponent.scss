@@ -118,7 +118,9 @@
     max-width: 500px; // Maximum width
     text-align: center;
     position: relative; // For positioning close button or other elements
-
+    h3 {
+      color: #007bff;
+    }
     .rating-inputs {
       margin: 10px 0;
 
@@ -130,6 +132,8 @@
         border-radius: 5px;
         cursor: pointer;
         transition: all 0.3s ease;
+        // color: black;
+        color: #007bff;
 
         &:hover,
         &.selected {
