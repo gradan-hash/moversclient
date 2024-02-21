@@ -104,13 +104,12 @@ const SingleTripComponent = () => {
               <strong>Location:</strong>{" "}
               {tripDetails.itemdetails.operationLocation}
             </p>
-            {/* Add more item details here */}
           </div>
         </div>
         <button onClick={completeOrder} className="complete-order-btn">
           Complete Order
         </button>
-        <Link to="/clientorders" className="back-link">
+        <Link to="/clientongoingorders" className="back-link">
           Back to Orders
         </Link>
       </div>
