@@ -1,57 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./currentorders.scss";
-import Sidebar from "../ProvidersDashboard/Sidebar";
 import Sidebarclient from "../Sidebar/Sidebarclient";
+import newRequests from "../../API/Newrequest";
+import { Link } from "react-router-dom";
 
 const ClientOrders = () => {
-  // Updated orders array with additional 'dateDelivered' and 'currentLocation' fields
-  const orders = [
-    {
-      id: 1,
-      drivername: "Alex Johnson",
-      service: "Storage",
-      destination: "New York",
-      price: "$200",
-      dateDelivered: "2023-07-15",
-      currentLocation: "Philadelphia",
-    },
-    {
-      id: 2,
-      drivername: "Mia Wong",
-      service: "Transport",
-      destination: "San Francisco",
-      price: "$350",
-      dateDelivered: "2023-07-18",
-      currentLocation: "Los Angeles",
-    },
-    {
-      id: 3,
-      drivername: "Chris Watanabe",
-      service: "Both",
-      destination: "Tokyo",
-      price: "$500",
-      dateDelivered: "2023-07-20",
-      currentLocation: "Osaka",
-    },
-    {
-      id: 4,
-      drivername: "Laura Brehm",
-      service: "Storage",
-      destination: "Berlin",
-      price: "$150",
-      dateDelivered: "2023-07-22",
-      currentLocation: "Munich",
-    },
-    {
-      id: 5,
-      drivername: "Raj Patel",
-      service: "Transport",
-      destination: "Mumbai",
-      price: "$250",
-      dateDelivered: "2023-07-25",
-      currentLocation: "New Delhi",
-    },
-  ];
+  const [trips, setTrips] = useState([]);
+
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const res = await newRequests.get("/getAllTrips");
+        setTrips(res.data); // Set the fetched trips data to the state
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getOrders();
+  }, []);
 
   return (
     <>
@@ -60,25 +26,30 @@ const ClientOrders = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name of the driver</th>
-              <th>Service Needed</th>
-              <th>Destination Location</th>
-              <th>Price for the Trip</th>
-              <th>Date Delivered</th>
-              <th>Current Location</th>
+              <th>Trip ID</th>
+              <th>Provider Company</th>
+              <th>Item Service Type</th>
+              <th>Item Description</th>
+              <th>Quotation</th>
+              <th>Operation Location</th>
+              <th>Order Date</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.drivername}</td> {/* Fixed to use 'drivername' */}
-                <td>{order.service}</td>
-                <td>{order.destination}</td> {/* Fixed to use 'destination' */}
-                <td>{order.price}</td>
-                <td>{order.dateDelivered}</td>
-                <td>{order.currentLocation}</td>
+            {trips.map((trip, index) => (
+              <tr key={index}>
+                <Link
+                  to={`/tripdetails/${trip._id}`}
+                  style={{ textDecoration: "none" }}>
+                  <td className="idd">{trip._id}</td>
+                </Link>
+                <td>{trip.providerdetails.companyname}</td>
+
+                <td>{trip.itemdetails.serviceType}</td>
+                <td>{trip.itemdetails.description}</td>
+                <td>${trip.itemdetails.quotation}</td>
+                <td>{trip.itemdetails.operationLocation}</td>
+                <td>{new Date(trip.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

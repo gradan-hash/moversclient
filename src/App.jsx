@@ -26,6 +26,7 @@ import ClientOrders from "./components/Orders/ClientOrders";
 import Providerslogin from "./components/login/Providerslog";
 import ProviderMessage from "./components/ProvidersDashboard/Providermessage";
 import Messagespro from "./components/messages/Messagespro";
+import SingleTripComponent from "./components/Singles/SingleTripComponent ";
 
 function App() {
   const queryClient = new QueryClient();
@@ -66,6 +67,10 @@ function App() {
         {
           path: "/mytrips",
           element: <MyTrips />,
+        },
+        {
+          path: "/tripdetails/:id",
+          element: <SingleTripComponent />,
         },
         {
           path: "/clientongoingorders",

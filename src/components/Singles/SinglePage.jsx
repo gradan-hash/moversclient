@@ -204,7 +204,7 @@ const SinglePage = () => {
       alert("Please confirm the request");
 
       const res = await newRequests.post("/posttrip", requestdata);
-      console.log(res.data)
+      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -245,7 +245,7 @@ const SinglePage = () => {
                 </p>
               </div>
 
-              <Link to={`/messages/${d}`} style={{ textDecoration: "none" }}>
+              <Link to={`/messages/${id}`} style={{ textDecoration: "none" }}>
                 <button>Message</button>
               </Link>
 
