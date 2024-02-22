@@ -22,6 +22,7 @@ const SinglePage = () => {
   const [providerdetails, setProviderdetails] = useState("");
 
   const { id } = useParams();
+  // console.log(id);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   // console.log(currentUser);
 
@@ -191,10 +192,10 @@ const SinglePage = () => {
     providerid,
     usernameid,
   };
-  console.log("details");
-
+  // console.log("details", );
 
   console.log("details", requestdata);
+
   const handleSubmit = async () => {
     setLoading(true);
     try {

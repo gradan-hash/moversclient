@@ -6,81 +6,91 @@ import newRequests from "../../API/Newrequest";
 import Sidebar from "../ProvidersDashboard/Sidebar";
 
 const Messagespro = () => {
-  const [messages, setMessages] = useState([]);
+  const [conversation, setConversation] = useState({
+    messages: [],
+    replies: [],
+  }); // Adjusted state
   const [initialMessage, setInitialMessage] = useState("");
-  const { id: providerid } = useParams();
-  const clientid = JSON.parse(localStorage.getItem("currentUser"))?._id;
-  const [uniqueId, setUniqueId] = useState(""); // State to store uniqueId
-  const [refresh, setRefresh] = useState(false); // State to trigger useEffect
+  const { uniqueid } = useParams();
+  const companyname = JSON.parse(
+    localStorage.getItem("currentUser")
+  )?.companyname;
 
-  const handleInitialMessageChange = (e) => {
-    setInitialMessage(e.target.value);
-  };
-
-  const sendInitialMessage = async () => {
-    if (!initialMessage.trim()) return;
-
-    const messagedetails = {
-      clientid,
-      providerid,
-      message: initialMessage,
-      sender: "user",
-    };
-
-    try {
-      const response = await newRequests.post("/postmessage", messagedetails);
-      console.log(response.data);
-      setUniqueId(response.data.uniqueid); // Save uniqueId for fetching messages
-      setInitialMessage("");
-      setRefresh(!refresh); // Trigger useEffect to refresh messages
-    } catch (error) {
-      console.error("Failed to send message:", error);
-    }
-  };
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    if (!uniqueId) return; // Ensure uniqueId is set before fetching messages
+    if (!uniqueid) return;
 
-    const getmessages = async () => {
+    const getMessages = async () => {
       try {
-        const res = await newRequests.get(`/getmessage/${uniqueId}`);
-        console.log(res.data);
-        setMessages(res.data);
+        const res = await newRequests.get(`/getmessage/${uniqueid}`);
+        if (res.data && res.data.length > 0) {
+          setConversation(res.data[0]); // Assuming the first object is the conversation
+        }
       } catch (error) {
         console.error(error);
       }
     };
 
-    getmessages();
+    getMessages();
 
-    const interval = setInterval(() => {
-      getmessages(); // Periodically fetch messages for real-time updates
-    }, 3000); // Adjust interval as needed
+    const interval = setInterval(getMessages, 3000);
+    return () => clearInterval(interval);
+  }, [uniqueid, refresh]);
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [uniqueId, refresh]); // Depend on uniqueId and refresh state
+  const sendInitialMessage = async () => {
+    if (!initialMessage.trim()) return;
+
+    const messagedetails = {
+      uniqueid,
+      replyMessage: initialMessage,
+      sender: companyname,
+    };
+
+    try {
+      await newRequests.post("/replymessage", messagedetails);
+      setInitialMessage("");
+      setRefresh(!refresh); // Trigger a refresh to fetch the latest messages and replies
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    }
+  };
+
+  const handleInitialMessageChange = (e) => {
+    setInitialMessage(e.target.value);
+  };
 
   return (
     <>
       <Sidebar />
       <div className="messages">
-        {messages.map((message) => (
-          <div
-            key={message._id}
-            className={`message ${
-              message.sender === "user" ? "user-message" : "provider-message"
-            }`}>
-            <>{message.sender}</>
-            <p>{message.message}</p>
-            <p className="time-sent">
-              {moment(message.createdAt).format("LLLL")}
-            </p>
-          </div>
-        ))}
+        <div className="message">
+          {/* Render Messages */}
+          {conversation.messages.map((msg, index) => (
+            <div key={`msg-${index}`} className="user-message">
+              <div>{msg.sender}</div>
+              <p>{msg.message}</p>
+              <p className="time-sent">
+                {moment(msg.createdAt).format("LLLL")}
+              </p>
+            </div>
+          ))}
+
+          {conversation.replies.map((reply, index) => (
+            <div key={`reply-${index}`} className="provider-message">
+              <div>{reply.sender}</div>
+              <p>{reply.replyMessage}</p>
+              <p className="time-sent">
+                {moment(reply.createdAt).format("LLLL")}
+              </p>
+            </div>
+          ))}
+        </div>
+
         <div className="start-conversation">
           <input
             type="text"
-            placeholder="Start a conversation..."
+            placeholder="Reply..."
             value={initialMessage}
             onChange={handleInitialMessageChange}
           />

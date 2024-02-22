@@ -40,9 +40,9 @@ const SinglePage = () => {
     Getsinglepage();
   }, []);
 
-  const d = providerdetails._id;
+  // const d = providerdetails._id;
 
-  console.log(d);
+  // console.log(d);
   const destination = { lat: -1.286389, lng: 36.817223 }; // Example destination
   const watchIdRef = useRef(null);
 
@@ -184,11 +184,11 @@ const SinglePage = () => {
     fetchLocationAndUpdateMap();
   }, []);
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser  = JSON.parse(localStorage.getItem("currentUser"));
 
   const itemid = company._id;
   const provideridd = providerdetails._id;
-  const usernameid = currentUser._id;
+  const usernameid = currentUser?._id;
 
   const requestdata = {
     itemid,
