@@ -39,7 +39,7 @@ const Reports = () => {
                 <th>Status</th>
 
                 <th>username</th>
-                <th>Compamny Ratig</th>
+                <th>Compamny Rating</th>
               </tr>
             </thead>
             <tbody>
@@ -72,7 +72,7 @@ const Reports = () => {
                 <th>Status</th>
 
                 <th>username</th>
-                <th>Compamny Ratig</th>
+                <th>Compamny Rating</th>
               </tr>
             </thead>
             <tbody>
