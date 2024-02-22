@@ -34,7 +34,7 @@ const SingleOrders = () => {
   const completeOrder = async () => {
     try {
       console.log(tripId);
-      const res = await newRequests.post("/updatependingTrip", tripId);
+      const res = await newRequests.post("/updatependingTrip", { tripId });
       console.log(res.data);
       alert("Success");
       // navigate("/ongoingorders");
@@ -117,7 +117,7 @@ const SingleOrders = () => {
             </p>
           </div>
         </div>
-        <button onClick={completeOrder} className="complete-order-btn">
+        <button onSubmit={completeOrder} className="complete-order-btn">
           Comnfirm Order
         </button>
       </div>
