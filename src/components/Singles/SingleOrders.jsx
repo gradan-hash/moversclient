@@ -37,7 +37,7 @@ const SingleOrders = () => {
       const res = await newRequests.post("/updatependingTrip", { tripId });
       console.log(res.data);
       alert("Success");
-      // navigate("/ongoingorders");
+      navigate("/ongoingorders");
     } catch (error) {
       console.error(error);
     }
