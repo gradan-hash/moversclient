@@ -45,7 +45,9 @@ const Reports = () => {
             <tbody>
               {storageReports.map((report, index) => (
                 <tr key={index}>
-                  <Link to="/reports/:id" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={`/reports/${report._id}`}
+                    style={{ textDecoration: "none" }}>
                     <td>{report._id}</td>
                   </Link>
                   <td>{report.itemdetails.operationLocation}</td>
@@ -76,7 +78,9 @@ const Reports = () => {
             <tbody>
               {transportReports.map((report) => (
                 <tr key={report._id}>
-                  <Link to="/reports/:id" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={`/reports/${report._id}`}
+                    style={{ textDecoration: "none" }}>
                     <td>{report._id}</td>
                   </Link>
                   <td>{report.itemdetails.operationLocation}</td>

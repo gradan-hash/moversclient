@@ -31,18 +31,6 @@ const CompletedSingleReport = () => {
   // console.log("_id", tripId);
   const navigate = useNavigate();
 
-  const completeOrder = async () => {
-    try {
-      console.log(tripId);
-      const res = await newRequests.post("/updatependingTrip", { tripId });
-      console.log(res.data);
-      alert("Success");
-      navigate("/ongoingorders");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   if (!tripDetails) return <div>Loading...</div>;
 
   return (
@@ -55,14 +43,15 @@ const CompletedSingleReport = () => {
           <div className="detail-section user-details">
             <h3>User Details</h3>
             <p>
-              <strong>Username:</strong> {tripDetails.userdetails.username}
+              <strong>Username: {tripDetails.userdetails.username}</strong>
             </p>
             <p>
-              <strong>Email:</strong> {tripDetails.userdetails.email}
+              <strong>Email: {tripDetails.userdetails.email}</strong>
             </p>
             <p>
-              <strong>Phonenumber:</strong>{" "}
-              {tripDetails.userdetails.phonenumber}
+              <strong>
+                Phonenumber: {tripDetails.userdetails.phonenumber}
+              </strong>
             </p>
           </div>
 
@@ -70,21 +59,27 @@ const CompletedSingleReport = () => {
             <h3>Provider Details</h3>
 
             <p>
-              <strong>Company:</strong>{" "}
-              {tripDetails.providerdetails.companyname}
+              <strong>
+                Company: {tripDetails.providerdetails.companyname}
+              </strong>
             </p>
             <p>
-              <strong>Company Type:</strong>{" "}
-              {tripDetails.providerdetails.companytype}
+              <strong>
+                Company Type: {tripDetails.providerdetails.companytype}
+              </strong>
             </p>
 
             <p>
-              <strong>Phonenumber:</strong>
-              {tripDetails.providerdetails.phonenumber}
+              <strong>
+                Phonenumber:
+                {tripDetails.providerdetails.phonenumber}
+              </strong>
             </p>
             <p>
-              <strong>Location:</strong>
-              {tripDetails.providerdetails.location}
+              <strong>
+                Location:
+                {tripDetails.providerdetails.location}
+              </strong>
             </p>
           </div>
 
@@ -98,28 +93,34 @@ const CompletedSingleReport = () => {
               />
             </p>
             <p>
-              <strong>Car Type:</strong> {tripDetails.itemdetails.cartype}
+              <strong>Car Type: {tripDetails.itemdetails.cartype}</strong>
             </p>
             <p>
-              <strong>Service Type:</strong>{" "}
-              {tripDetails.itemdetails.serviceType}
+              <strong>
+                Service Type: {tripDetails.itemdetails.serviceType}
+              </strong>
             </p>
             <p>
-              <strong>Description:</strong>{" "}
-              {tripDetails.itemdetails.description}
+              <strong>
+                Description: {tripDetails.itemdetails.description}
+              </strong>
             </p>
             <p>
-              <strong>Quotation:</strong> ${tripDetails.itemdetails.quotation}
+              <strong>Quotation: ${tripDetails.itemdetails.quotation}</strong>
             </p>
             <p>
-              <strong>Location:</strong>{" "}
-              {tripDetails.itemdetails.operationLocation}
+              <strong>
+                Location: {tripDetails.itemdetails.operationLocation}
+              </strong>
+            </p>
+            <p>
+              <strong>Status:{tripDetails.status}</strong>
+            </p>
+            <p>
+              <strong>Rating:{tripDetails.rating}</strong>
             </p>
           </div>
         </div>
-        <button onSubmit={completeOrder} className="complete-order-btn">
-          Comnfirm Order
-        </button>
       </div>
     </>
   );
