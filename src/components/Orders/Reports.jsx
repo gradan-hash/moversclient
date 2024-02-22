@@ -13,8 +13,8 @@ const Reports = () => {
       try {
         const res = await newRequests("/getAllCompletedTrips");
         console.log(res.data);
-        setstorageReports(res.data.itemdetails.serviceType == "storage");
-        settransportReports(res.data.itemdetails.serviceType == "moving");
+        setstorageReports(res.data.storage);
+        settransportReports(res.data.moving);
       } catch (error) {
         console.error(error);
       }
@@ -34,19 +34,23 @@ const Reports = () => {
               <tr>
                 <th>ID</th>
                 <th>Location</th>
-                <th>City</th>
-                <th>Capacity Used</th>
-                <th>Items Stored</th>
+                <th>companyname</th>
+                <th>Status</th>
+
+                <th>username</th>
+                <th>Compamny Ratig</th>
               </tr>
             </thead>
             <tbody>
-              {storageReports.map((report) => (
-                <tr key={report.id}>
-                  <td>{report.id}</td>
-                  <td>{report.location}</td>
-                  <td>{report.city}</td>
-                  <td>{report.capacityUsed}</td>
-                  <td>{report.itemsStored}</td>
+              {storageReports.map((report, index) => (
+                <tr key={index}>
+                  <td>{report._id}</td>
+                  <td>{report.itemdetails.operationLocation}</td>
+                  <td>{report.providerdetails.companyname}</td>
+
+                  <td>{report.status}</td>
+                  <td>{report.userdetails.username}</td>
+                  <td>{report.rating}</td>
                 </tr>
               ))}
             </tbody>
@@ -58,22 +62,24 @@ const Reports = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Service Provider</th>
-                <th>From</th>
-                <th>To</th>
+                <th>Location</th>
+                <th>companyname</th>
                 <th>Status</th>
-                <th>Date</th>
+
+                <th>username</th>
+                <th>Compamny Ratig</th>
               </tr>
             </thead>
             <tbody>
               {transportReports.map((report) => (
-                <tr key={report.id}>
-                  <td>{report.id}</td>
-                  <td>{report.serviceProvider}</td>
-                  <td>{report.from}</td>
-                  <td>{report.to}</td>
+                <tr key={report._id}>
+                  <td>{report._id}</td>
+                  <td>{report.itemdetails.operationLocation}</td>
+                  <td>{report.providerdetails.companyname}</td>
+
                   <td>{report.status}</td>
-                  <td>{report.date}</td>
+                  <td>{report.userdetails.username}</td>
+                  <td>{report.rating}</td>
                 </tr>
               ))}
             </tbody>
