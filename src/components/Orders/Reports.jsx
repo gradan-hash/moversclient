@@ -1,45 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./reports.scss";
 import Sidebar from "../ProvidersDashboard/Sidebar";
+import newRequests from "../../API/Newrequest";
 
 const Reports = () => {
-  const storageReports = [
-    {
-      id: 1,
-      location: "Warehouse 5",
-      city: "New York",
-      capacityUsed: "75%",
-      itemsStored: 300,
-    },
-    {
-      id: 2,
-      location: "Warehouse 12",
-      city: "San Francisco",
-      capacityUsed: "60%",
-      itemsStored: 200,
-    },
-    // Add more storage reports as needed
-  ];
+  const [storageReports, setstorageReports] = useState([]);
 
-  const transportReports = [
-    {
-      id: 1,
-      serviceProvider: "FastTrans",
-      from: "Chicago",
-      to: "Detroit",
-      status: "Completed",
-      date: "2024-01-15",
-    },
-    {
-      id: 2,
-      serviceProvider: "QuickMove",
-      from: "Boston",
-      to: "New York",
-      status: "Completed",
-      date: "2024-01-18",
-    },
-    // Add more transport reports as needed
-  ];
+  const [transportReports, settransportReports] = useState([]);
+
+  useEffect(() => {
+    const GetReports = async () => {
+      try {
+        const res = await newRequests("/getAllCompletedTrips");
+        console.log(res.data);
+        setstorageReports(res.data.itemdetails.serviceType == "storage");
+        settransportReports(res.data.itemdetails.serviceType == "moving");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    GetReports();
+  }, []);
 
   return (
     <>
