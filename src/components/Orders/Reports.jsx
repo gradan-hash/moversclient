@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./reports.scss";
 import Sidebar from "../ProvidersDashboard/Sidebar";
 import newRequests from "../../API/Newrequest";
+import { Link } from "react-router-dom";
 
 const Reports = () => {
   const [storageReports, setstorageReports] = useState([]);
@@ -44,7 +45,9 @@ const Reports = () => {
             <tbody>
               {storageReports.map((report, index) => (
                 <tr key={index}>
-                  <td>{report._id}</td>
+                  <Link to="/reports/:id" style={{ textDecoration: "none" }}>
+                    <td>{report._id}</td>
+                  </Link>
                   <td>{report.itemdetails.operationLocation}</td>
                   <td>{report.providerdetails.companyname}</td>
 
@@ -73,7 +76,9 @@ const Reports = () => {
             <tbody>
               {transportReports.map((report) => (
                 <tr key={report._id}>
-                  <td>{report._id}</td>
+                  <Link to="/reports/:id" style={{ textDecoration: "none" }}>
+                    <td>{report._id}</td>
+                  </Link>
                   <td>{report.itemdetails.operationLocation}</td>
                   <td>{report.providerdetails.companyname}</td>
 

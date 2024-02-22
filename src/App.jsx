@@ -28,6 +28,7 @@ import ProviderMessage from "./components/ProvidersDashboard/Providermessage";
 import Messagespro from "./components/messages/Messagespro";
 import SingleTripComponent from "./components/Singles/SingleTripComponent ";
 import SingleOrders from "./components/Singles/Singleorders";
+import CompletedSingleReport from "./components/Singles/CompletedSingleReport";
 
 function App() {
   const queryClient = new QueryClient();
@@ -124,6 +125,10 @@ function App() {
         {
           path: "/reports",
           element: <Reports />,
+        },
+        {
+          path: "/reports/:id",
+          element: <CompletedSingleReport />,
         },
         {
           path: "/uploaditems",
