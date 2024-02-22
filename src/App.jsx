@@ -29,6 +29,7 @@ import Messagespro from "./components/messages/Messagespro";
 import SingleTripComponent from "./components/Singles/SingleTripComponent ";
 import SingleOrders from "./components/Singles/Singleorders";
 import CompletedSingleReport from "./components/Singles/CompletedSingleReport";
+import SingleTrips from "./components/Singles/SingleTrips";
 
 function App() {
   const queryClient = new QueryClient();
@@ -69,6 +70,10 @@ function App() {
         {
           path: "/mytrips",
           element: <MyTrips />,
+        },
+        {
+          path: "/trips/:id",
+          element: <SingleTrips />,
         },
         {
           path: "/tripdetails/:id",

@@ -1,76 +1,103 @@
 import React, { useEffect, useState } from "react";
-import "./mytrips.scss";
-import Sidebarclient from "../Sidebar/Sidebarclient";
+import "../Orders/reports.scss";
+import Sidebar from "../ProvidersDashboard/Sidebar";
 import newRequests from "../../API/Newrequest";
+import { Link } from "react-router-dom";
+import Sidebarclient from "../Sidebar/Sidebarclient";
 
-const MyTrips = () => {
-  const [expandedTripId, setExpandedTripId] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [trips, setTrips] = useState([]);
+const Mytrips = () => {
+  const [storageReports, setstorageReports] = useState([]);
+
+  const [transportReports, settransportReports] = useState([]);
 
   useEffect(() => {
-    const getTrips = async () => {
-      setLoading(true);
+    const GetReports = async () => {
       try {
-        const res = await newRequests.get("/getAllCompletedTrips");
-        setTrips(res.data);
-        setLoading(false);
+        const res = await newRequests("/getAllCompletedTrips");
+        console.log(res.data);
+        setstorageReports(res.data.storage);
+        settransportReports(res.data.moving);
       } catch (error) {
         console.error(error);
-        setLoading(false);
       }
     };
 
-    getTrips();
+    GetReports();
   }, []);
-
-  const toggleDetails = (id) => {
-    setExpandedTripId(expandedTripId === id ? null : id);
-  };
-
-  if (loading) return <div>Loading...</div>;
 
   return (
     <>
       <Sidebarclient />
-      <div className="my-trips-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Rating</th>
-              <th>Quotation</th>
-              <th>CompanyName</th>
-              <th>Operation Location</th>
-            </tr>
-          </thead>
-          <tbody>
-            {trips.length > 0 &&
-              trips.map((trip) => (
-                <React.Fragment key={trip._id}>
-                  <tr onClick={() => toggleDetails(trip._id)}>
-                    <td>{trip.rating}</td>
-                    <td>${trip.itemdetails.quotation}</td>
-                    <td>{trip.providerdetails.companyname}</td>
-                    <td>{trip.itemdetails.operationLocation}</td>
-                  </tr>
-                  {expandedTripId === trip._id && (
-                    <tr className="trip-details">
-                      <td colSpan="4">
-                        <p>Car Type: {trip.itemdetails.cartype}</p>
-                        <p>Description: {trip.itemdetails.description}</p>
-                        <p>User Email: {trip.userdetails.email}</p>
-                        <p>Provider Email: {trip.providerdetails.email}</p>
-                        {/* You can add more details here */}
-                      </td>
-                    </tr>
-                  )}
-                </React.Fragment>
+      <div className="reports">
+        <section className="reportSection">
+          <h2>Storage Reports</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>companyname</th>
+                <th>Status</th>
+
+                <th>username</th>
+                <th>Compamny Ratig</th>
+              </tr>
+            </thead>
+            <tbody>
+              {storageReports.map((report, index) => (
+                <tr key={index}>
+                  <Link
+                    to={`/trips/${report._id}`}
+                    style={{ textDecoration: "none" }}>
+                    <td>{report._id}</td>
+                  </Link>
+                  <td>{report.itemdetails.operationLocation}</td>
+                  <td>{report.providerdetails.companyname}</td>
+
+                  <td>{report.status}</td>
+                  <td>{report.userdetails.username}</td>
+                  <td>{report.rating}</td>
+                </tr>
               ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </section>
+        <section className="reportSection">
+          <h2>Transport Reports</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>companyname</th>
+                <th>Status</th>
+
+                <th>username</th>
+                <th>Compamny Ratig</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transportReports.map((report) => (
+                <tr key={report._id}>
+                  <Link
+                    to={`/trips/${report._id}`}
+                    style={{ textDecoration: "none" }}>
+                    <td>{report._id}</td>
+                  </Link>
+                  <td>{report.itemdetails.operationLocation}</td>
+                  <td>{report.providerdetails.companyname}</td>
+
+                  <td>{report.status}</td>
+                  <td>{report.userdetails.username}</td>
+                  <td>{report.rating}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
       </div>
     </>
   );
 };
 
-export default MyTrips;
+export default Mytrips;

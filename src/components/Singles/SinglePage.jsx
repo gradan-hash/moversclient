@@ -184,11 +184,11 @@ const SinglePage = () => {
     fetchLocationAndUpdateMap();
   }, []);
 
-  const currentUser  = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
 
   const itemid = company._id;
   const provideridd = providerdetails._id;
-  const usernameid = currentUser?._id;
+  const usernameid = currentUser._id;
 
   const requestdata = {
     itemid,
@@ -204,6 +204,7 @@ const SinglePage = () => {
       alert("Please confirm the request");
 
       const res = await newRequests.post("/posttrip", requestdata);
+
       console.log(res.data);
     } catch (error) {
       console.error(error);
